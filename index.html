@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HCar — Bảo vệ sàn xê yêu</title>
+  <link rel="stylesheet" href="./styles.css">
+  <style>
+    /* ── HERO (homepage only) ───────────────────── */
+    #hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center;
+      overflow: hidden; padding-top: 108px;
+      background: var(--ground);
+    }
+    #hero::before {
+      content: ''; position: absolute; top: 0; right: 0;
+      width: 55%; height: 100%;
+      background: var(--surface);
+      clip-path: polygon(8% 0, 100% 0, 100% 100%, 0% 100%);
+      z-index: 0;
+    }
+    #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 1280px; margin: 0 auto;
+      padding: 80px 24px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; gap: 60px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent-dim); border: 1px solid rgba(232,25,10,0.22);
+      padding: 5px 12px; border-radius: 20px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 20px;
+    }
+    .hero-badge::before {
+      content: ''; width: 6px; height: 6px;
+      background: var(--accent); border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.6)} }
+    .hero-title {
+      font-family: 'Arial Black', Impact, sans-serif; font-weight: 900;
+      font-size: clamp(42px, 5.5vw, 74px); line-height: 0.96;
+      letter-spacing: -0.03em; text-transform: uppercase; margin-bottom: 22px; color: var(--text);
+    }
+    .hero-title .line-red { color: var(--accent); display: block; }
+    .hero-title .line-dark { color: var(--text); display: block; }
+    .hero-sub { color: var(--text-dim); font-size: 16px; line-height: 1.75; max-width: 420px; margin-bottom: 36px; }
+    .hero-sub strong { color: var(--text); }
+    .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero-stats { display: flex; gap: 28px; margin-top: 40px; padding-top: 28px; border-top: 1.5px solid var(--border); }
+    .hero-stat-val { font-family: 'Arial Black', sans-serif; font-size: 26px; font-weight: 900; color: var(--accent); line-height: 1; }
+    .hero-stat-lbl { font-size: 12px; color: var(--text-dim); margin-top: 3px; }
+    .hero-visual { position: relative; display: flex; align-items: center; justify-content: center; }
+    .hero-product-card-large {
+      position: relative; z-index: 2;
+      background: var(--ground); border: 1px solid var(--border-hi);
+      border-radius: var(--radius-lg); overflow: hidden; width: 340px;
+      box-shadow: 0 24px 60px rgba(17,18,36,0.15);
+    }
+    .hero-product-img { width: 100%; height: 240px; background: var(--surface-hi); overflow: hidden; }
+    .hero-product-img canvas { width: 100%; height: 100%; display: block; }
+    .hero-product-info { padding: 18px 20px; }
+    .hero-product-info .label { margin-bottom: 6px; }
+    .hero-product-name { font-size: 15px; font-weight: 700; margin-bottom: 10px; line-height: 1.3; }
+    .hero-product-price { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+    .price-main { font-family: 'Arial Black', sans-serif; font-size: 22px; font-weight: 900; color: var(--accent); }
+    .price-old { font-size: 13px; color: var(--text-faint); text-decoration: line-through; }
+    .floating-card {
+      position: absolute; background: var(--ground); border: 1px solid var(--border-hi);
+      border-radius: var(--radius); padding: 10px 14px; font-size: 12px;
+      box-shadow: 0 8px 24px rgba(17,18,36,0.12); z-index: 3;
+    }
+    .floating-card-1 { top: 16px; right: -44px; display: flex; align-items: center; gap: 8px; }
+    .floating-card-1 .icon { font-size: 20px; }
+    .floating-card-1 .fc-val { font-size: 15px; font-weight: 800; color: var(--accent); }
+    .floating-card-1 .fc-lbl { color: var(--text-dim); font-size: 11px; }
+    .floating-card-2 { bottom: 36px; left: -52px; }
+    .stars { color: var(--accent); font-size: 12px; }
+    .fc2-val { font-size: 13px; font-weight: 700; margin-top: 2px; }
+    .fc2-lbl { font-size: 11px; color: var(--text-dim); }
+    @media (max-width: 900px) {
+      #hero::before { display: none; }
+      .hero-content { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER ─────────────────────────────────── -->
+<header id="header">
+  <div class="header-top">
+    <a href="/" class="logo" aria-label="HCar trang chủ">
+      <div class="logo-wordmark"><span class="logo-h">H</span><span class="logo-car">Car</span></div>
+      <div class="logo-rule"></div>
+      <div class="logo-tagline">Bảo vệ sàn xê yêu</div>
+    </a>
+    <div class="header-contact">
+      <div class="header-contact-icon">📞</div>
+      <div>
+        <div class="label">Hotline hỗ trợ</div>
+        <strong>0367.353.369</strong>
+      </div>
+    </div>
+    <div class="header-actions">
+      <a href="#" class="btn-cart" aria-label="Giỏ hàng">
+        🛒 Giỏ hàng <span class="cart-count">0</span>
+      </a>
+    </div>
+  </div>
+  <nav class="nav-bar" aria-label="Menu chính">
+    <div class="nav-inner">
+      <div class="nav-item"><a href="/" class="nav-link active">🏠 Trang chủ</a></div>
+      <div class="nav-item">
+        <a href="./categories/phu-kien-ngoai-that-o-to.html" class="nav-link">
+          Phụ kiện ngoại thất
+          <svg class="nav-chevron" width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </a>
+        <div class="nav-dropdown" role="menu">
+          <a href="./categories/phu-kien-ngoai-that-o-to.html" role="menuitem"><span class="brand-dot"></span>Tất cả ngoại thất</a>
+          <a href="#" role="menuitem"><span class="brand-dot"></span>Bộ body kit</a>
+          <a href="#" role="menuitem"><span class="brand-dot"></span>Ốp gương chiếu hậu</a>
+          <a href="#" role="menuitem"><span class="brand-dot"></span>Đèn LED ngoại thất</a>
+          <a href="#" role="menuitem"><span class="brand-dot"></span>Thanh bước chân</a>
+          <a href="#" role="menuitem"><span class="brand-dot"></span>Spoiler & cánh gió</a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="./categories/phu-kien-noi-that-o-to.html" class="nav-link">
+          Phụ kiện nội thất
+          <svg class="nav-chevron" width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </a>
+        <div class="nav-dropdown" role="menu">
+          <a href="./categories/tham-lot-san-nhua-duc-tpe.html" role="menuitem"><span class="brand-dot"></span>Thảm lót sàn TPE</a>
+          <a href="./categories/tham-lot-cop-nhua-duc-tpe.html" role="menuitem"><span class="brand-dot"></span>Thảm lót cốp xe</a>
+          <a href="#" role="menuitem"><span class="brand-dot"></span>Bọc vô-lăng & ghế</a>
+          <a href="#" role="menuitem"><span class="brand-dot"></span>Gương chiếu hậu</a>
+        </div>
+      </div>
+      <div class="nav-item"><a href="./categories/tham-lot-san-nhua-duc-tpe.html" class="nav-link">Thảm lót sàn</a></div>
+      <div class="nav-item"><a href="./categories/tham-lot-cop-nhua-duc-tpe.html" class="nav-link">Thảm lót cốp</a></div>
+      <div class="nav-item"><a href="#" class="nav-link">Khuyến mãi <span class="nav-sale-badge">-20%</span></a></div>
+      <div class="nav-item"><a href="#" class="nav-link">Liên hệ</a></div>
+    </div>
+  </nav>
+</header>
+
+<!-- ── HERO ───────────────────────────────────── -->
+<section id="hero" aria-label="Trang chủ">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-badge">✦ Thảm TPE nhựa đúc chính hãng</div>
+      <h1 class="hero-title">
+        <span class="line-dark">Bảo vệ</span>
+        <span class="line-red">Sàn xe</span>
+        <span class="line-dark">Đúng chuẩn</span>
+      </h1>
+      <p class="hero-sub">
+        Thảm lót <strong>nhựa đúc TPE theo form xe</strong>, phụ kiện nội ngoại thất
+        chất lượng cao — thiết kế riêng cho từng dòng xe Nhật, Hàn phổ biến tại Việt Nam.
+      </p>
+      <div class="hero-cta">
+        <a href="./categories/tham-lot-san-nhua-duc-tpe.html" class="btn-primary">Xem sản phẩm →</a>
+        <a href="#categories" class="btn-secondary">Theo hãng xe</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="hero-stat-val">5.000+</div><div class="hero-stat-lbl">Đơn hàng / tháng</div></div>
+        <div><div class="hero-stat-val">3 CN</div><div class="hero-stat-lbl">Toàn quốc</div></div>
+        <div><div class="hero-stat-val">4.9★</div><div class="hero-stat-lbl">Đánh giá</div></div>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-product-card-large">
+        <div class="hero-product-img">
+          <canvas id="hero-product-canvas" width="340" height="240"></canvas>
+        </div>
+        <div class="hero-product-info">
+          <div class="label">Bán chạy nhất</div>
+          <div class="hero-product-name">Thảm lót sàn TPE Toyota Veloz Cross</div>
+          <div class="hero-product-price">
+            <span class="price-main">2.100.000 ₫</span>
+            <span class="price-old">2.625.000 ₫</span>
+            <span class="badge-sale">-20%</span>
+          </div>
+        </div>
+      </div>
+      <div class="floating-card floating-card-1">
+        <div class="icon">🚚</div>
+        <div><div class="fc-val">Miễn phí</div><div class="fc-lbl">Giao hàng toàn quốc</div></div>
+      </div>
+      <div class="floating-card floating-card-2">
+        <div class="stars">★★★★★</div>
+        <div class="fc2-val">4.9 / 5.0</div>
+        <div class="fc2-lbl">1.200+ đánh giá</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TRUST BAR ───────────────────────────────── -->
+<div class="trust-bar">
+  <div class="trust-inner">
+    <div class="trust-item"><div class="trust-icon">🏆</div>Giá tốt nhất thị trường</div>
+    <div class="trust-sep" aria-hidden="true"></div>
+    <div class="trust-item"><div class="trust-icon">🚛</div>Miễn phí giao hàng</div>
+    <div class="trust-sep" aria-hidden="true"></div>
+    <div class="trust-item"><div class="trust-icon">💵</div>Thanh toán khi nhận hàng</div>
+    <div class="trust-sep" aria-hidden="true"></div>
+    <div class="trust-item"><div class="trust-icon">🔄</div>Đổi trả 15 ngày</div>
+    <div class="trust-sep" aria-hidden="true"></div>
+    <div class="trust-item"><div class="trust-icon">🛡️</div>Bảo hành toàn quốc</div>
+  </div>
+</div>
+
+<!-- ── CATEGORIES ─────────────────────────────── -->
+<div id="categories">
+  <div class="section">
+    <div class="section-head">
+      <div class="label">Danh mục sản phẩm</div>
+      <h2 class="section-title">Chọn theo <span class="accent">nhu cầu</span></h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="categories-grid">
+      <a href="./categories/tham-lot-san-nhua-duc-tpe.html" class="cat-card" aria-label="Thảm lót sàn TPE">
+        <span class="cat-icon">🧩</span>
+        <div class="cat-name">Thảm lót sàn TPE</div>
+        <div class="cat-count">48 sản phẩm</div>
+        <span class="cat-arrow">↗</span>
+      </a>
+      <a href="./categories/tham-lot-cop-nhua-duc-tpe.html" class="cat-card" aria-label="Thảm lót cốp xe">
+        <span class="cat-icon">📦</span>
+        <div class="cat-name">Thảm lót cốp xe</div>
+        <div class="cat-count">32 sản phẩm</div>
+        <span class="cat-arrow">↗</span>
+      </a>
+      <a href="./categories/phu-kien-ngoai-that-o-to.html" class="cat-card" aria-label="Phụ kiện ngoại thất">
+        <span class="cat-icon">🚗</span>
+        <div class="cat-name">Phụ kiện ngoại thất</div>
+        <div class="cat-count">67 sản phẩm</div>
+        <span class="cat-arrow">↗</span>
+      </a>
+      <a href="./categories/phu-kien-noi-that-o-to.html" class="cat-card" aria-label="Phụ kiện nội thất">
+        <span class="cat-icon">🪑</span>
+        <div class="cat-name">Phụ kiện nội thất</div>
+        <div class="cat-count">54 sản phẩm</div>
+        <span class="cat-arrow">↗</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ── PRODUCTS ────────────────────────────────── -->
+<div id="products">
+  <div class="section" style="padding-top:0;">
+    <div class="section-head section-head-row">
+      <div>
+        <div class="label">Đang giảm giá</div>
+        <h2 class="section-title">Sản phẩm <span class="accent">nổi bật</span></h2>
+        <div class="section-divider"></div>
+      </div>
+      <a href="./categories/tham-lot-san-nhua-duc-tpe.html" class="view-all">Xem tất cả →</a>
+    </div>
+    <div class="products-grid" id="product-grid"></div>
+  </div>
+</div>
+
+<!-- ── BRANDS ──────────────────────────────────── -->
+<div class="brands-section">
+  <div class="brands-inner">
+    <div class="brands-label"><div class="label" style="text-align:center;">Xem theo hãng xe</div></div>
+    <div class="brands-row">
+      <a href="./categories/tham-lot-san-nhua-duc-tpe.html" class="brand-chip"><span class="dot"></span>Toyota</a>
+      <a href="./categories/tham-lot-san-nhua-duc-tpe.html" class="brand-chip"><span class="dot"></span>Honda</a>
+      <a href="./categories/tham-lot-san-nhua-duc-tpe.html" class="brand-chip"><span class="dot"></span>Mazda</a>
+      <a href="./categories/tham-lot-san-nhua-duc-tpe.html" class="brand-chip"><span class="dot"></span>Nissan</a>
+      <a href="./categories/tham-lot-san-nhua-duc-tpe.html" class="brand-chip"><span class="dot"></span>Hyundai</a>
+      <a href="./categories/tham-lot-san-nhua-duc-tpe.html" class="brand-chip"><span class="dot"></span>Kia</a>
+      <a href="./categories/tham-lot-san-nhua-duc-tpe.html" class="brand-chip"><span class="dot"></span>Mitsubishi</a>
+      <a href="./categories/tham-lot-san-nhua-duc-tpe.html" class="brand-chip"><span class="dot"></span>Ford</a>
+      <a href="./categories/tham-lot-san-nhua-duc-tpe.html" class="brand-chip"><span class="dot"></span>Suzuki</a>
+      <a href="./categories/tham-lot-san-nhua-duc-tpe.html" class="brand-chip"><span class="dot"></span>VinFast</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── PROMO ────────────────────────────────────── -->
+<div class="promo-banner">
+  <div class="promo-inner">
+    <span class="promo-text">🎉 Giảm thêm 5% cho đơn từ 2 triệu — mã <strong>HCAR5</strong></span>
+    <a href="./categories/tham-lot-san-nhua-duc-tpe.html" class="promo-cta">Mua ngay →</a>
+  </div>
+</div>
+
+<!-- ── COMMITMENTS ─────────────────────────────── -->
+<div class="commit-section">
+  <div class="commit-grid">
+    <div class="commit-item"><div class="commit-icon-wrap">🏆</div><div class="commit-title">Giá tốt nhất</div><div class="commit-desc">Cam kết giá tốt nhất — hoàn tiền nếu tìm được rẻ hơn</div></div>
+    <div class="commit-item"><div class="commit-icon-wrap">🚛</div><div class="commit-title">Ship miễn phí</div><div class="commit-desc">Miễn phí giao hàng toàn quốc đơn từ 500.000 ₫</div></div>
+    <div class="commit-item"><div class="commit-icon-wrap">💵</div><div class="commit-title">COD toàn quốc</div><div class="commit-desc">Thanh toán khi nhận hàng — không cần trả trước</div></div>
+    <div class="commit-item"><div class="commit-icon-wrap">🔄</div><div class="commit-title">Đổi trả 15 ngày</div><div class="commit-desc">Không vừa ý trả lại — hoàn tiền 100%</div></div>
+    <div class="commit-item"><div class="commit-icon-wrap">🛡️</div><div class="commit-title">Bảo hành 12 tháng</div><div class="commit-desc">Tại tất cả cơ sở HCar trên cả nước</div></div>
+  </div>
+</div>
+
+<!-- ── FOOTER ──────────────────────────────────── -->
+<footer id="footer">
+  <div class="footer-main">
+    <div class="footer-brand">
+      <a href="/" class="logo footer-logo">
+        <div class="logo-wordmark"><span class="logo-h">H</span><span class="logo-car">Car</span></div>
+        <div class="logo-rule"></div>
+        <div class="logo-tagline">Bảo vệ sàn xê yêu</div>
+      </a>
+      <p>Chuyên cung cấp phụ kiện ô tô chất lượng cao — thảm lót sàn TPE, phụ kiện nội ngoại thất cho xe Nhật, Hàn phổ biến tại Việt Nam.</p>
+      <div class="store-chips">
+        <div class="store-chip"><div class="store-chip-icon">📍</div>Hà Nội: 123 Nguyễn Trãi, Thanh Xuân</div>
+        <div class="store-chip"><div class="store-chip-icon">📍</div>TP.HCM: 456 Đinh Tiên Hoàng, Bình Thạnh</div>
+        <div class="store-chip"><div class="store-chip-icon">📍</div>Thanh Hóa: 78 Lê Lợi, TP. Thanh Hóa</div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Sản phẩm</h4>
+      <ul>
+        <li><a href="./categories/tham-lot-san-nhua-duc-tpe.html">Thảm lót sàn TPE</a></li>
+        <li><a href="./categories/tham-lot-cop-nhua-duc-tpe.html">Thảm lót cốp xe</a></li>
+        <li><a href="./categories/phu-kien-ngoai-that-o-to.html">Body kit ngoại thất</a></li>
+        <li><a href="#">Đèn LED xe hơi</a></li>
+        <li><a href="#">Bọc vô-lăng</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Hỗ trợ</h4>
+      <ul>
+        <li><a href="#">Chính sách đổi trả</a></li>
+        <li><a href="#">Chính sách bảo hành</a></li>
+        <li><a href="#">Hướng dẫn mua hàng</a></li>
+        <li><a href="#">Tra cứu đơn hàng</a></li>
+        <li><a href="#">Câu hỏi thường gặp</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Liên hệ</h4>
+      <ul>
+        <li><div class="footer-contact-row"><span class="icon">📞</span><div><div class="lbl">Hotline</div><strong>0367.353.369</strong></div></div></li>
+        <li><div class="footer-contact-row"><span class="icon">✉️</span><div><div class="lbl">Email</div>info@hcar.vn</div></div></li>
+        <li><div class="footer-contact-row"><span class="icon">🕐</span><div><div class="lbl">Giờ mở cửa</div>8:00 – 20:00 mỗi ngày</div></div></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <div class="footer-copy">© 2024 HCar. Phụ kiện ô tô chính hãng.</div>
+      <div class="footer-badges">
+        <span class="payment-badge">VISA</span>
+        <span class="payment-badge">Momo</span>
+        <span class="payment-badge">ZaloPay</span>
+        <span class="payment-badge">COD</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* hero canvas */ (function(){const c=document.getElementById('hero-canvas');if(!c)return;const ctx=c.getContext('2d');let W,H,lines=[];function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;}class Line{constructor(){this.reset();this.x=Math.random()*W;}reset(){this.fromRight=Math.random()>.5;this.x=this.fromRight?W+10:-10;this.y=Math.random()*H;this.speed=.5+Math.random()*1.4;this.dir=this.fromRight?-1:1;this.len=30+Math.random()*100;this.isRed=Math.random()<.18;this.alpha=this.isRed?.10+Math.random()*.15:.04+Math.random()*.06;this.width=.4+Math.random()*1.2;}update(){this.x+=this.speed*this.dir;if(this.dir===1&&this.x-this.len>W)this.reset();if(this.dir===-1&&this.x+this.len<0)this.reset();}draw(){const r=this.isRed?232:17,g=this.isRed?25:18,b=this.isRed?10:36;const grad=ctx.createLinearGradient(this.x,0,this.x+this.len*this.dir,0);grad.addColorStop(0,`rgba(${r},${g},${b},${this.alpha})`);grad.addColorStop(1,`rgba(${r},${g},${b},0)`);ctx.beginPath();ctx.moveTo(this.x,this.y);ctx.lineTo(this.x+this.len*this.dir,this.y);ctx.strokeStyle=grad;ctx.lineWidth=this.width;ctx.stroke();}}function init(){resize();lines=Array.from({length:70},()=>new Line());}function loop(){ctx.clearRect(0,0,W,H);lines.forEach(l=>{l.update();l.draw();});requestAnimationFrame(loop);}window.addEventListener('resize',resize);init();loop();})();
+
+/* hero product canvas */ (function(){const c=document.getElementById('hero-product-canvas');if(!c)return;const ctx=c.getContext('2d');const W=340,H=240;ctx.fillStyle='#EAEDF4';ctx.fillRect(0,0,W,H);ctx.strokeStyle='rgba(17,18,36,0.05)';ctx.lineWidth=1;for(let x=0;x<W;x+=18){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}for(let y=0;y<H;y+=18){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}const mat=new Path2D();mat.moveTo(60,58);mat.bezierCurveTo(60,38,280,38,280,58);mat.lineTo(290,178);mat.bezierCurveTo(290,198,50,198,50,178);mat.closePath();ctx.fillStyle='#D8DCE8';ctx.fill(mat);ctx.save();ctx.clip(mat);ctx.strokeStyle='rgba(255,255,255,0.6)';ctx.lineWidth=1;for(let y=50;y<210;y+=9){ctx.beginPath();ctx.moveTo(40,y);ctx.lineTo(300,y);ctx.stroke();}ctx.strokeStyle='rgba(232,25,10,0.15)';ctx.lineWidth=0.5;for(let x=40;x<310;x+=15)for(let y=45;y<210;y+=15){ctx.beginPath();ctx.moveTo(x+7.5,y);ctx.lineTo(x+15,y+7.5);ctx.lineTo(x+7.5,y+15);ctx.lineTo(x,y+7.5);ctx.closePath();ctx.stroke();}ctx.restore();ctx.strokeStyle='rgba(232,25,10,0.5)';ctx.lineWidth=2;ctx.stroke(mat);ctx.fillStyle='rgba(232,25,10,0.85)';ctx.font='bold 14px Arial Black,sans-serif';ctx.textAlign='center';ctx.fillText('HCAR',170,125);ctx.fillStyle='rgba(17,18,36,0.35)';ctx.font='10px Arial,sans-serif';ctx.fillText('VELOZ CROSS · TPE',170,141);})();
+
+/* product cards */
+const PRODUCTS=[
+  {name:'Thảm TPE Toyota Veloz Cross 2022+',brand:'Toyota',price:'2.100.000',old:'2.625.000',sale:20,hot:true,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-toyota-veloz-cross'},
+  {name:'Thảm TPE Honda CR-V 5 chỗ 2017–2023',brand:'Honda',price:'2.100.000',old:'2.625.000',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-honda-crv'},
+  {name:'Thảm TPE Mazda CX-5 2018–2024',brand:'Mazda',price:'2.100.000',old:'2.625.000',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-mazda-cx5'},
+  {name:'Thảm TPE Hyundai Tucson NX4 2022+',brand:'Hyundai',price:'2.300.000',old:'2.875.000',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-hyundai-tucson'},
+  {name:'Thảm lót cốp Toyota Fortuner 2017+',brand:'Toyota',price:'700.000',old:'875.000',sale:20,hot:true,newBadge:false,slug:'tham-lot-cop-nhua-duc-tpe-toyota-fortuner'},
+  {name:'Thảm TPE Kia Sorento 2021–2024',brand:'Kia',price:'2.300.000',old:'2.875.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-kia-sorento'},
+  {name:'Thảm lót cốp Omoda C5 2023+',brand:'Omoda',price:'700.000',old:'875.000',sale:20,hot:false,newBadge:true,slug:'tham-lot-cop-nhua-duc-tpe-omoda-c5'},
+  {name:'Thảm TPE Mitsubishi Destinator 2023+',brand:'Mitsubishi',price:'2.300.000',old:'2.875.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-mitsubishi-destinator'},
+];
+const MAT_COLORS=[['#D4D8E4','#B8BDD0'],['#D4DDE8','#B0BFCC'],['#DDD4E2','#C0B0CC'],['#D4E2D8','#B4CCC0'],['#E2D8D4','#CCB8B0'],['#D4E0E0','#B0C4C4'],['#E2D4D4','#CCB0B0'],['#D4D8E8','#B4BCCC']];
+function drawMat(canvas,colors){const ctx=canvas.getContext('2d');const W=canvas.width,H=canvas.height;const[bg,mat]=colors;ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);ctx.strokeStyle='rgba(255,255,255,0.5)';ctx.lineWidth=1;for(let x=0;x<W;x+=14){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}for(let y=0;y<H;y+=14){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}const rw=W*.68,rh=H*.56,rx=(W-rw)/2,ry=(H-rh)/2,r=9;ctx.beginPath();ctx.moveTo(rx+r,ry);ctx.lineTo(rx+rw-r,ry);ctx.quadraticCurveTo(rx+rw,ry,rx+rw,ry+r);ctx.lineTo(rx+rw,ry+rh-r);ctx.quadraticCurveTo(rx+rw,ry+rh,rx+rw-r,ry+rh);ctx.lineTo(rx+r,ry+rh);ctx.quadraticCurveTo(rx,ry+rh,rx,ry+rh-r);ctx.lineTo(rx,ry+r);ctx.quadraticCurveTo(rx,ry,rx+r,ry);ctx.closePath();ctx.fillStyle=mat;ctx.fill();ctx.save();ctx.clip();ctx.strokeStyle='rgba(255,255,255,0.4)';ctx.lineWidth=1;for(let y2=ry;y2<ry+rh;y2+=9){ctx.beginPath();ctx.moveTo(rx,y2);ctx.lineTo(rx+rw,y2);ctx.stroke();}ctx.restore();ctx.strokeStyle='rgba(232,25,10,0.6)';ctx.lineWidth=1.5;ctx.stroke();ctx.fillStyle='rgba(232,25,10,0.8)';ctx.font='bold 11px Arial Black,sans-serif';ctx.textAlign='center';ctx.fillText('HCAR',W/2,H/2+4);}
+const grid=document.getElementById('product-grid');
+PRODUCTS.forEach((p,i)=>{
+  const card=document.createElement('a');
+  card.className='product-card';
+  card.href='./products/'+p.slug+'.html';
+  card.setAttribute('aria-label',p.name);
+  card.innerHTML=`<div class="product-img"><canvas width="260" height="190" aria-hidden="true"></canvas><div class="badge-wrap"><span class="badge-sale">-${p.sale}%</span>${p.hot?'<span class="badge-hot">HOT</span>':''}${p.newBadge?'<span class="badge-new">MỚI</span>':''}</div></div><div class="product-body"><div class="product-brand">${p.brand}</div><div class="product-name">${p.name}</div><div class="product-price-row"><div><div class="p-price-main">${p.price} ₫</div><div class="p-price-old">${p.old} ₫</div></div><button class="btn-add" aria-label="Thêm vào giỏ hàng" onclick="event.preventDefault();addCart(this)">+</button></div></div>`;
+  grid.appendChild(card);
+  const cv=card.querySelector('canvas');cv.width=260;cv.height=190;drawMat(cv,MAT_COLORS[i%MAT_COLORS.length]);
+});
+
+/* cart */
+let cartCount=0;const cartBadge=document.querySelector('.cart-count');
+function addCart(btn){cartCount++;cartBadge.textContent=cartCount;btn.textContent='✓';btn.style.background='var(--accent)';btn.style.color='#fff';setTimeout(()=>{btn.textContent='+';btn.style.background='';btn.style.color='';},1200);}
+
+/* scroll */
+const header=document.getElementById('header');
+window.addEventListener('scroll',()=>header.classList.toggle('scrolled',window.scrollY>40),{passive:true});
+</script>
+</body>
+</html>
