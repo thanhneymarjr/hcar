@@ -149,6 +149,17 @@
   </nav>
 </header>
 
+<!-- ── #8 PROMO BANNER ──────────────────────── -->
+<div class="promo-banner" id="promo-banner">
+  <div class="promo-banner-text">🔥 Flash Sale: Giảm 20% toàn bộ thảm lót sàn & cốp TPE — Kết thúc sau:</div>
+  <div class="promo-countdown">
+    <div class="promo-countdown-chip" id="cd-h">00</div><span>:</span>
+    <div class="promo-countdown-chip" id="cd-m">00</div><span>:</span>
+    <div class="promo-countdown-chip" id="cd-s">00</div>
+  </div>
+  <button class="promo-banner-close" onclick="this.closest('#promo-banner').remove()" aria-label="Đóng">×</button>
+</div>
+
 <!-- ── HERO ───────────────────────────────────── -->
 <section id="hero" aria-label="Trang chủ">
   <canvas id="hero-canvas" aria-hidden="true"></canvas>
@@ -214,6 +225,32 @@
     <div class="trust-item"><div class="trust-icon">🔄</div>Đổi trả 15 ngày</div>
     <div class="trust-sep" aria-hidden="true"></div>
     <div class="trust-item"><div class="trust-icon">🛡️</div>Bảo hành toàn quốc</div>
+  </div>
+</div>
+
+<!-- ── #1/#6 CAR FINDER ───────────────────────── -->
+<div class="section" style="padding-bottom:0;">
+  <div class="car-finder">
+    <div class="car-finder-head">
+      <div class="car-finder-title">🔍 Tìm phụ kiện theo xe</div>
+      <div class="car-finder-sub">Chọn hãng & dòng xe để xem sản phẩm phù hợp ngay</div>
+    </div>
+    <div class="car-finder-row">
+      <select class="car-finder-select" id="cf-brand" onchange="cfUpdateModels()">
+        <option value="">-- Chọn hãng xe --</option>
+        <option>Toyota</option><option>Honda</option><option>Mazda</option>
+        <option>Hyundai</option><option>Kia</option><option>Mitsubishi</option>
+        <option>Nissan</option><option>MG</option><option>Omoda</option>
+      </select>
+      <select class="car-finder-select" id="cf-model" disabled onchange="cfShowResult()">
+        <option value="">-- Chọn dòng xe --</option>
+      </select>
+      <button class="car-finder-btn" onclick="cfGo()">Tìm ngay →</button>
+    </div>
+    <div class="car-finder-result" id="cf-result">
+      <div class="car-finder-result-title" id="cf-result-title"></div>
+      <div class="car-finder-links" id="cf-result-links"></div>
+    </div>
   </div>
 </div>
 
@@ -401,6 +438,73 @@ function addCart(btn){cartCount++;cartBadge.textContent=cartCount;btn.textConten
 /* scroll */
 const header=document.getElementById('header');
 window.addEventListener('scroll',()=>header.classList.toggle('scrolled',window.scrollY>40),{passive:true});
+
+/* #8 Countdown */
+(function(){
+  const end=new Date();end.setDate(end.getDate()+3);end.setHours(23,59,59,0);
+  function tick(){
+    const diff=end-new Date();if(diff<=0){document.getElementById('promo-banner')?.remove();return;}
+    const h=String(Math.floor(diff/3600000)).padStart(2,'0');
+    const m=String(Math.floor(diff%3600000/60000)).padStart(2,'0');
+    const s=String(Math.floor(diff%60000/1000)).padStart(2,'0');
+    const ch=document.getElementById('cd-h'),cm=document.getElementById('cd-m'),cs=document.getElementById('cd-s');
+    if(ch)ch.textContent=h;if(cm)cm.textContent=m;if(cs)cs.textContent=s;
+  }
+  tick();setInterval(tick,1000);
+})();
+
+/* #1/#6 Car Finder */
+const CF_DATA={
+  Toyota:{models:['Veloz Cross 2022+','Camry 2019–2024','Fortuner 2017–2024','Innova Cross 2023+','Land Cruiser 2022+','Vios 2023+'],slugs:{san:{'Veloz Cross 2022+':'tham-lot-san-o-to-tpe-khuon-duc-toyota-veloz-cross','Camry 2019–2024':'tham-lot-san-o-to-tpe-khuon-duc-toyota-camry','Fortuner 2017–2024':'tham-lot-san-o-to-tpe-khuon-duc-toyota-fortuner','Innova Cross 2023+':'tham-lot-san-o-to-tpe-khuon-duc-toyota-innova-cross','Land Cruiser 2022+':'tham-lot-san-o-to-tpe-nhua-duc-toyota-land-cruiser','Vios 2023+':'tham-lot-san-o-to-tpe-khuon-duc-toyota-vios'},cop:{'Veloz Cross 2022+':'tham-lot-cop-nhua-duc-tpe-toyota-veloz-cross','Fortuner 2017–2024':'tham-lot-cop-nhua-duc-tpe-toyota-fortuner','Innova Cross 2023+':'tham-lot-cop-nhua-duc-tpe-toyota-innova-cross','Land Cruiser 2022+':'tham-lot-cop-nhua-duc-tpe-toyota-land-cruiser'}}},
+  Honda:{models:['CR-V 2017–2023','City 2021+','HRV 2022+','Civic 2022+'],slugs:{san:{'CR-V 2017–2023':'tham-lot-san-o-to-tpe-khuon-duc-honda-crv','City 2021+':'tham-lot-san-o-to-tpe-khuon-duc-honda-city','HRV 2022+':'tham-lot-san-o-to-tpe-khuon-duc-honda-hrv','Civic 2022+':'tham-lot-san-o-to-tpe-khuon-duc-honda-civic'},cop:{'CR-V 2017–2023':'tham-lot-cop-nhua-duc-tpe-honda-crv','City 2021+':'tham-lot-cop-nhua-duc-tpe-honda-city','HRV 2022+':'tham-lot-cop-nhua-duc-tpe-honda-hrv'}}},
+  Mazda:{models:['CX-5 2018–2024','CX-8 2019–2024','Mazda 3 2020+','CX-3 2024+'],slugs:{san:{'CX-5 2018–2024':'tham-lot-san-o-to-tpe-khuon-duc-mazda-cx5','CX-8 2019–2024':'tham-lot-san-o-to-tpe-khuon-duc-mazda-cx8','Mazda 3 2020+':'tham-lot-san-o-to-tpe-khuon-duc-mazda-3','CX-3 2024+':'tham-lot-san-o-to-tpe-khuon-duc-mazda-cx3'},cop:{'CX-5 2018–2024':'tham-lot-cop-nhua-duc-tpe-mazda-cx5','CX-8 2019–2024':'tham-lot-cop-nhua-duc-tpe-mazda-cx8'}}},
+  Hyundai:{models:['Tucson NX4 2022+','Santa Fe 2021–2024','Accent 2021+'],slugs:{san:{'Tucson NX4 2022+':'tham-lot-san-o-to-tpe-khuon-duc-hyundai-tucson','Santa Fe 2021–2024':'tham-lot-san-o-to-tpe-khuon-duc-hyundai-santa-fe','Accent 2021+':'tham-lot-san-o-to-tpe-khuon-duc-hyundai-accent'},cop:{'Tucson NX4 2022+':'tham-lot-cop-nhua-duc-tpe-hyundai-tucson','Santa Fe 2021–2024':'tham-lot-cop-nhua-duc-tpe-hyundai-santa-fe'}}},
+  Kia:{models:['Sorento 2021–2024','K3 2021+','Sportage NQ5 2023+'],slugs:{san:{'Sorento 2021–2024':'tham-lot-san-o-to-tpe-khuon-duc-kia-sorento','K3 2021+':'tham-lot-san-o-to-tpe-khuon-duc-kia-k3','Sportage NQ5 2023+':'tham-lot-san-o-to-tpe-khuon-duc-kia-sportage'},cop:{'Sportage NQ5 2023+':'tham-lot-cop-nhua-duc-tpe-kia-sportage'}}},
+  Mitsubishi:{models:['Xpander 2020+','Outlander 2023+'],slugs:{san:{'Xpander 2020+':'tham-lot-san-o-to-tpe-khuon-duc-mitsubishi-xpander','Outlander 2023+':'tham-lot-san-o-to-tpe-khuon-duc-mitsubishi-outlander'},cop:{}}},
+  Nissan:{models:['Terra 2019+'],slugs:{san:{'Terra 2019+':'tham-lot-san-o-to-tpe-khuon-duc-nissan-terra'},cop:{}}},
+  MG:{models:['MG5 2022+'],slugs:{san:{'MG5 2022+':'tham-lot-san-o-to-tpe-khuon-duc-mg5'},cop:{}}},
+  Omoda:{models:['C5 2023+'],slugs:{san:{},cop:{'C5 2023+':'tham-lot-cop-nhua-duc-tpe-omoda-c5'}}},
+};
+function cfUpdateModels(){
+  const brand=document.getElementById('cf-brand').value;
+  const sel=document.getElementById('cf-model');
+  sel.innerHTML='<option value="">-- Chọn dòng xe --</option>';
+  document.getElementById('cf-result').classList.remove('visible');
+  if(!brand){sel.disabled=true;return;}
+  sel.disabled=false;
+  (CF_DATA[brand]?.models||[]).forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=m;sel.appendChild(o);});
+}
+function cfShowResult(){
+  const brand=document.getElementById('cf-brand').value;
+  const model=document.getElementById('cf-model').value;
+  const res=document.getElementById('cf-result');
+  if(!brand||!model){res.classList.remove('visible');return;}
+  const d=CF_DATA[brand];
+  const sanSlug=d?.slugs?.san?.[model];
+  const copSlug=d?.slugs?.cop?.[model];
+  if(!sanSlug&&!copSlug){res.classList.remove('visible');return;}
+  document.getElementById('cf-result-title').textContent='Sản phẩm cho '+brand+' '+model+':';
+  const links=document.getElementById('cf-result-links');
+  links.innerHTML='';
+  if(sanSlug){const a=document.createElement('a');a.href='./products/san-pham.html?slug='+sanSlug;a.className='car-finder-link';a.textContent='🧩 Thảm lót sàn';links.appendChild(a);}
+  if(copSlug){const a=document.createElement('a');a.href='./products/san-pham.html?slug='+copSlug;a.className='car-finder-link secondary';a.textContent='📦 Thảm lót cốp';links.appendChild(a);}
+  res.classList.add('visible');
+}
+function cfGo(){
+  const brand=document.getElementById('cf-brand').value;
+  const model=document.getElementById('cf-model').value;
+  if(!brand||!model){alert('Vui lòng chọn hãng xe và dòng xe');return;}
+  const d=CF_DATA[brand];
+  const sanSlug=d?.slugs?.san?.[model];
+  if(sanSlug) window.location.href='./products/san-pham.html?slug='+sanSlug;
+}
 </script>
+
+<!-- #7 Zalo Widget -->
+<a href="https://zalo.me/0367353369" target="_blank" rel="noopener" class="zalo-float" aria-label="Chat Zalo với HCar">
+  <div class="zalo-float-pulse"></div>
+  <div class="zalo-float-btn">Z</div>
+  <div class="zalo-float-label">Zalo</div>
+</a>
 </body>
 </html>

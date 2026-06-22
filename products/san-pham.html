@@ -160,17 +160,53 @@
   <div class="footer-bottom"><div class="footer-bottom-inner"><div class="footer-copy">© 2024 HCar. Phụ kiện ô tô chính hãng.</div><div class="footer-badges"><span class="payment-badge">VISA</span><span class="payment-badge">Momo</span><span class="payment-badge">ZaloPay</span><span class="payment-badge">COD</span></div></div></div>
 </footer>
 
-<!-- ORDER MODAL -->
+<!-- #4 STICKY MOBILE CTA -->
+<div class="sticky-cta-bar" id="sticky-cta">
+  <div class="sticky-cta-info">
+    <div class="sticky-cta-price" id="sticky-price"></div>
+    <div class="sticky-cta-old" id="sticky-old"></div>
+  </div>
+  <button class="btn-buy-now" onclick="buyNow()">Mua ngay</button>
+  <button class="btn-add-cart" style="padding:10px 12px;font-size:12px;" onclick="addToCart()">+Giỏ</button>
+</div>
+
+<!-- #3 ORDER FORM MODAL -->
 <div id="order-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.55);align-items:center;justify-content:center;padding:16px;" onclick="if(event.target===this) closeModal()">
-  <div style="background:#fff;border-radius:16px;padding:36px 32px;max-width:400px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.25);position:relative;">
+  <div style="background:#fff;border-radius:16px;padding:32px 28px;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.25);position:relative;max-height:90vh;overflow-y:auto;">
     <button onclick="closeModal()" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:22px;cursor:pointer;color:#aaa;line-height:1;">×</button>
-    <div style="width:64px;height:64px;background:#fff0ee;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px;">📞</div>
-    <h3 style="font-family:'Arial Black',sans-serif;font-size:20px;font-weight:900;margin:0 0 8px;color:#111;">Đặt hàng qua điện thoại</h3>
-    <p style="color:#666;font-size:14px;margin:0 0 24px;line-height:1.6;">Gọi ngay để được tư vấn và đặt hàng nhanh nhất.<br>Hỗ trợ <strong>8:00 – 20:00</strong> mỗi ngày.</p>
-    <a href="tel:0367353369" style="display:block;background:#E8190A;color:#fff;font-size:22px;font-weight:900;font-family:'Arial Black',sans-serif;letter-spacing:1px;padding:14px 24px;border-radius:10px;text-decoration:none;margin-bottom:12px;">0367.353.369</a>
-    <button onclick="closeModal()" style="background:none;border:1.5px solid #ddd;border-radius:8px;padding:10px 24px;font-size:14px;color:#666;cursor:pointer;width:100%;">Đóng</button>
+    <div style="width:56px;height:56px;background:#fff0ee;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:26px;">🛒</div>
+    <h3 style="font-family:'Arial Black',sans-serif;font-size:18px;font-weight:900;margin:0 0 6px;color:#111;text-align:center;">Đặt hàng nhanh</h3>
+    <p style="color:#888;font-size:13px;margin:0 0 20px;line-height:1.5;text-align:center;">Điền thông tin để chúng tôi xác nhận đơn qua Zalo</p>
+    <div class="order-success" id="order-success">
+      <div class="order-success-icon">✅</div>
+      <h3>Đã gửi thành công!</h3>
+      <p>Chúng tôi sẽ liên hệ xác nhận trong vài phút.</p>
+    </div>
+    <div id="order-form-inner">
+      <div class="order-form-row">
+        <label>Họ tên *</label>
+        <input type="text" id="of-name" placeholder="Nguyễn Văn A">
+      </div>
+      <div class="order-form-row">
+        <label>Số điện thoại *</label>
+        <input type="tel" id="of-phone" placeholder="0912 345 678">
+      </div>
+      <div class="order-form-row">
+        <label>Ghi chú</label>
+        <input type="text" id="of-note" placeholder="Màu sắc, năm xe, yêu cầu...">
+      </div>
+      <button class="order-form-submit" onclick="submitOrder()">Gửi đặt hàng qua Zalo →</button>
+      <a href="tel:0367353369" class="order-form-call">📞 Gọi ngay: 0367.353.369</a>
+    </div>
   </div>
 </div>
+
+<!-- #7 ZALO WIDGET -->
+<a href="https://zalo.me/0367353369" target="_blank" rel="noopener" class="zalo-float" aria-label="Chat Zalo với HCar">
+  <div class="zalo-float-pulse"></div>
+  <div class="zalo-float-btn">Z</div>
+  <div class="zalo-float-label">Zalo</div>
+</a>
 
 <script>
 /* ── ALL PRODUCTS DATA ── */
@@ -322,9 +358,39 @@ function changeQty(delta){const inp=document.getElementById('qty');inp.value=Mat
 function selectVariant(btn){document.querySelectorAll('.variant-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
 let cartCount=0;
 function addToCart(){cartCount++;document.getElementById('cart-badge').textContent=cartCount;const btn=document.querySelector('.btn-add-cart');const orig=btn.textContent;btn.textContent='✓ Đã thêm vào giỏ';btn.style.background='var(--accent)';btn.style.color='#fff';btn.style.border='2px solid var(--accent)';setTimeout(()=>{btn.textContent=orig;btn.style.background='';btn.style.color='';btn.style.border='';},1800);}
-function buyNow(){document.getElementById('order-modal').style.display='flex';}
+function buyNow(){
+  document.getElementById('order-success').style.display='none';
+  document.getElementById('order-form-inner').style.display='block';
+  document.getElementById('order-modal').style.display='flex';
+}
 function closeModal(){document.getElementById('order-modal').style.display='none';}
 document.addEventListener('keydown',e=>{if(e.key==='Escape') closeModal();});
+
+/* #3 Order form submit → Zalo */
+function submitOrder(){
+  const name=document.getElementById('of-name').value.trim();
+  const phone=document.getElementById('of-phone').value.trim();
+  const note=document.getElementById('of-note').value.trim();
+  if(!name){document.getElementById('of-name').focus();alert('Vui lòng nhập họ tên');return;}
+  if(!phone){document.getElementById('of-phone').focus();alert('Vui lòng nhập số điện thoại');return;}
+  const pName=p?p.name:'Sản phẩm HCar';
+  const msg='Xin chào HCar! Tôi '+name+' muốn đặt:\n📦 '+pName+'\n📱 SĐT: '+phone+(note?'\n📝 '+note:'');
+  window.open('https://zalo.me/0367353369','_blank');
+  document.getElementById('order-form-inner').style.display='none';
+  document.getElementById('order-success').style.display='block';
+}
+
+/* #4 Sticky CTA */
+if(p){
+  const sp=document.getElementById('sticky-price'),so=document.getElementById('sticky-old');
+  if(sp) sp.textContent=fmtPrice(p.price)+' ₫';
+  if(so) so.textContent=fmtPrice(Math.round(p.price/0.8))+' ₫';
+  const ctaEl=document.querySelector('.product-cta');
+  const stickyBar=document.getElementById('sticky-cta');
+  if(ctaEl&&stickyBar){
+    window.addEventListener('scroll',()=>stickyBar.classList.toggle('visible',ctaEl.getBoundingClientRect().bottom<0),{passive:true});
+  }
+}
 function switchTab(id,btn){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');btn.setAttribute('aria-selected','true');}
 
 const header=document.getElementById('header');
