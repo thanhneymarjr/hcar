@@ -252,7 +252,7 @@ function clearCompare(){compareList=[];document.querySelectorAll('.card-compare-
 function openCompareModal(){
   if(compareList.length<2){alert('Chọn ít nhất 2 sản phẩm để so sánh');return;}
   const prods=compareList.map(c=>PRODUCTS.find(p=>p.slug===c.slug)).filter(Boolean);
-  const fields=[['Hãng xe',p=>p.brand],['Giá bán',p=>p.price+' ₫'],['Giá gốc',p=>p.old+' ₫'],['Đánh giá',p=>p.rating],['Đã bán',p=>p.sold]];
+  const fields=[['Hãng xe',p=>p.brand],['Giá bán',p=>p.price+' ₫'],['Giá gốc',p=>p.old+' ₫'],['Khuyến mãi',p=>'-'+p.sale+'%'],['Trạng thái',p=>(p.hot?'🔥 Bán chạy':p.newBadge?'✨ Hàng mới':'Còn hàng')]];
   const thead='<tr><th>Thông số</th>'+prods.map(p=>`<th><a href="../products/san-pham.html?slug=${p.slug}" style="color:var(--accent);text-decoration:none;font-size:13px;">${p.name.slice(0,40)}</a></th>`).join('')+'</tr>';
   const tbody=fields.map(([lbl,fn])=>`<tr><td><strong>${lbl}</strong></td>${prods.map(p=>`<td>${fn(p)}</td>`).join('')}</tr>`).join('');
   document.getElementById('compare-table-wrap').innerHTML=`<div style="overflow-x:auto"><table class="compare-table"><thead>${thead}</thead><tbody>${tbody}</tbody></table></div>`;

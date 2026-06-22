@@ -812,7 +812,7 @@ ul { list-style: none; }
 /* ══════════════════════════════════════════════
    #8 PROMO COUNTDOWN BANNER
    ══════════════════════════════════════════════ */
-.promo-banner {
+#promo-banner {
   background: var(--accent); color: #fff;
   padding: 10px 48px 10px 16px;
   display: flex; align-items: center; justify-content: center;
@@ -979,7 +979,6 @@ ul { list-style: none; }
 .card-compare-check:checked + .card-compare-label {
   border-color: var(--accent); color: var(--accent); background: #fff0ee;
 }
-.product-img { position: relative; }
 
 /* ══════════════════════════════════════════════
    #3 ORDER FORM
@@ -1010,4 +1009,3 @@ ul { list-style: none; }
 .product-img img.product-photo {
   width: 100%; height: 100%; object-fit: cover; border-radius: inherit; display: block;
 }
-.product-img canvas { display: block; width: 100%; height: auto; }

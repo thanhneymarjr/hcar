@@ -496,7 +496,10 @@ function cfGo(){
   if(!brand||!model){alert('Vui lòng chọn hãng xe và dòng xe');return;}
   const d=CF_DATA[brand];
   const sanSlug=d?.slugs?.san?.[model];
-  if(sanSlug) window.location.href='./products/san-pham.html?slug='+sanSlug;
+  const copSlug=d?.slugs?.cop?.[model];
+  const target=sanSlug||copSlug;
+  if(target) window.location.href='./products/san-pham.html?slug='+target;
+  else alert('Chưa có sản phẩm cho '+brand+' '+model+'. Vui lòng liên hệ hotline để đặt hàng.');
 }
 </script>
 
