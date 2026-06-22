@@ -219,7 +219,7 @@ function renderPage(page){
   const slice=filtered.slice((currentPage-1)*PAGE_SIZE,currentPage*PAGE_SIZE);
   grid.innerHTML='';
   slice.forEach((p,i)=>{
-    const card=document.createElement('a');card.className='product-card';card.href='../products/'+p.slug+'.html';card.setAttribute('aria-label',p.name);
+    const card=document.createElement('a');card.className='product-card';card.href='../products/san-pham.html?slug='+p.slug;card.setAttribute('aria-label',p.name);
     card.innerHTML=`<div class="product-img"><canvas width="260" height="190" aria-hidden="true"></canvas><div class="badge-wrap"><span class="badge-sale">-${p.sale}%</span>${p.hot?'<span class="badge-hot">HOT</span>':''}${p.newBadge?'<span class="badge-new">MỚI</span>':''}</div></div><div class="product-body"><div class="product-brand">${p.brand}</div><div class="product-name">${p.name}</div><div class="product-price-row"><div><div class="p-price-main">${p.price} ₫</div><div class="p-price-old">${p.old} ₫</div></div><button class="btn-add" onclick="event.preventDefault();this.textContent='✓';this.style.background='var(--accent)';this.style.color='#fff';setTimeout(()=>{this.textContent='+';this.style.background='';this.style.color='';},1200)" aria-label="Thêm vào giỏ hàng">+</button></div></div>`;
     grid.appendChild(card);const cv=card.querySelector('canvas');cv.width=260;cv.height=190;drawMat(cv,MAT_COLORS[((currentPage-1)*PAGE_SIZE+i)%MAT_COLORS.length]);
   });

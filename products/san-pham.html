@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Sản phẩm — HCar</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<header id="header">
+  <div class="header-top">
+    <a href="../index.html" class="logo"><div class="logo-wordmark"><span class="logo-h">H</span><span class="logo-car">Car</span></div><div class="logo-rule"></div><div class="logo-tagline">Bảo vệ sàn xê yêu</div></a>
+    <div class="header-contact"><div class="header-contact-icon">📞</div><div><div class="label">Hotline hỗ trợ</div><strong>0367.353.369</strong></div></div>
+    <div class="header-actions"><a href="#" class="btn-cart">🛒 Giỏ hàng <span class="cart-count" id="cart-badge">0</span></a></div>
+  </div>
+  <nav class="nav-bar">
+    <div class="nav-inner">
+      <div class="nav-item"><a href="../index.html" class="nav-link">🏠 Trang chủ</a></div>
+      <div class="nav-item">
+        <a href="../categories/phu-kien-ngoai-that-o-to.html" class="nav-link">Phụ kiện ngoại thất <svg class="nav-chevron" width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg></a>
+        <div class="nav-dropdown"><a href="../categories/phu-kien-ngoai-that-o-to.html"><span class="brand-dot"></span>Tất cả ngoại thất</a><a href="#"><span class="brand-dot"></span>Bộ body kit</a></div>
+      </div>
+      <div class="nav-item">
+        <a href="../categories/tham-lot-san-nhua-duc-tpe.html" class="nav-link">Phụ kiện nội thất <svg class="nav-chevron" width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg></a>
+        <div class="nav-dropdown"><a href="../categories/tham-lot-san-nhua-duc-tpe.html"><span class="brand-dot"></span>Thảm lót sàn TPE</a><a href="../categories/tham-lot-cop-nhua-duc-tpe.html"><span class="brand-dot"></span>Thảm lót cốp xe</a></div>
+      </div>
+      <div class="nav-item"><a href="../categories/tham-lot-san-nhua-duc-tpe.html" class="nav-link">Thảm lót sàn</a></div>
+      <div class="nav-item"><a href="../categories/tham-lot-cop-nhua-duc-tpe.html" class="nav-link">Thảm lót cốp</a></div>
+      <div class="nav-item"><a href="#" class="nav-link">Khuyến mãi <span class="nav-sale-badge">-20%</span></a></div>
+      <div class="nav-item"><a href="#" class="nav-link">Liên hệ</a></div>
+    </div>
+  </nav>
+</header>
+
+<main class="page-body" id="main-content">
+  <div class="container">
+    <nav class="breadcrumb" id="breadcrumb"></nav>
+  </div>
+
+  <div class="section" style="padding-top:16px;padding-bottom:40px;">
+    <div class="product-detail-layout">
+      <div class="gallery">
+        <div class="gallery-main">
+          <canvas id="main-img" aria-label="Ảnh sản phẩm chính"></canvas>
+          <button class="gallery-zoom" aria-label="Phóng to ảnh">🔍</button>
+        </div>
+        <div class="gallery-thumbs" id="thumbs"></div>
+      </div>
+
+      <div class="product-info-panel">
+        <div>
+          <div class="product-info-brand" id="info-brand"></div>
+          <h1 class="product-info-name" id="info-name"></h1>
+        </div>
+        <div class="product-info-rating">
+          <span class="stars-filled">★★★★★</span>
+          <span style="font-weight:700;" id="info-rating">4.8</span>
+          <span class="rating-count" id="info-rcount"></span>
+          <span style="color:var(--border-hi);">|</span>
+          <span class="rating-sold" id="info-sold"></span>
+        </div>
+        <div class="product-info-price">
+          <span class="price-big" id="info-price"></span>
+          <span class="price-orig" id="info-old"></span>
+          <span class="price-badge">-20%</span>
+        </div>
+        <div class="product-info-meta">
+          <div class="meta-row"><span class="meta-label">Tình trạng</span><span class="meta-value in-stock">✓ Còn hàng — giao ngay</span></div>
+          <div class="meta-row"><span class="meta-label">Áp dụng cho xe</span><span class="meta-value" id="info-car"></span></div>
+          <div class="meta-row"><span class="meta-label">Bao gồm</span><span class="meta-value" id="info-includes"></span></div>
+        </div>
+        <div class="variant-group">
+          <div class="variant-label">Màu sắc</div>
+          <div class="variant-options">
+            <button class="variant-btn active" onclick="selectVariant(this)">Đen</button>
+            <button class="variant-btn" onclick="selectVariant(this)">Kem trắng</button>
+          </div>
+        </div>
+        <div class="qty-group">
+          <div class="variant-label">Số lượng</div>
+          <div class="qty-control">
+            <button class="qty-btn" onclick="changeQty(-1)">−</button>
+            <input type="number" class="qty-input" id="qty" value="1" min="1" max="99">
+            <button class="qty-btn" onclick="changeQty(1)">+</button>
+          </div>
+        </div>
+        <div class="product-cta">
+          <button class="btn-buy-now" onclick="buyNow()">Mua ngay</button>
+          <button class="btn-add-cart" onclick="addToCart()">Thêm vào giỏ 🛒</button>
+        </div>
+        <div class="trust-mini">
+          <div class="trust-mini-item"><span class="icon">🚛</span>Miễn phí giao hàng toàn quốc</div>
+          <div class="trust-mini-item"><span class="icon">🔄</span>Đổi trả 15 ngày</div>
+          <div class="trust-mini-item"><span class="icon">🛡️</span>Bảo hành 12 tháng</div>
+          <div class="trust-mini-item"><span class="icon">💵</span>COD — trả khi nhận</div>
+        </div>
+        <div style="display:flex;gap:10px;padding-top:4px;">
+          <button style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-dim);padding:8px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);transition:border-color .2s;background:none;cursor:pointer;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">🤍 Yêu thích</button>
+          <button style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-dim);padding:8px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);transition:border-color .2s;background:none;cursor:pointer;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">📤 Chia sẻ</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="padding-top:0;">
+    <div class="tabs-bar" role="tablist">
+      <button class="tab-btn active" role="tab" aria-selected="true" onclick="switchTab('desc',this)">Mô tả sản phẩm</button>
+      <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('specs',this)">Thông số kỹ thuật</button>
+      <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('reviews',this)">Đánh giá</button>
+    </div>
+    <div class="tab-panel active" id="tab-desc">
+      <div id="desc-content"></div>
+    </div>
+    <div class="tab-panel" id="tab-specs">
+      <table class="specs-table"><tbody id="specs-body"></tbody></table>
+    </div>
+    <div class="tab-panel" id="tab-reviews">
+      <div class="review-summary">
+        <div style="text-align:center;">
+          <div class="review-score-big" id="rev-score">4.8</div>
+          <div class="review-score-stars">★★★★★</div>
+          <div class="review-score-count" id="rev-count"></div>
+        </div>
+        <div class="review-bars">
+          <div class="review-bar-row"><span style="width:16px;text-align:right;">5★</span><div class="review-bar-track"><div class="review-bar-fill" style="width:85%"></div></div><span>85%</span></div>
+          <div class="review-bar-row"><span style="width:16px;text-align:right;">4★</span><div class="review-bar-track"><div class="review-bar-fill" style="width:11%"></div></div><span>11%</span></div>
+          <div class="review-bar-row"><span style="width:16px;text-align:right;">3★</span><div class="review-bar-track"><div class="review-bar-fill" style="width:3%"></div></div><span>3%</span></div>
+          <div class="review-bar-row"><span style="width:16px;text-align:right;">2★</span><div class="review-bar-track"><div class="review-bar-fill" style="width:1%"></div></div><span>1%</span></div>
+          <div class="review-bar-row"><span style="width:16px;text-align:right;">1★</span><div class="review-bar-track"><div class="review-bar-fill" style="width:0%"></div></div><span>0%</span></div>
+        </div>
+      </div>
+      <div id="reviews-list"></div>
+    </div>
+  </div>
+
+  <div class="section" style="padding-top:0;">
+    <div class="section-head section-head-row">
+      <div>
+        <div class="label">Xem thêm</div>
+        <h2 class="section-title">Sản phẩm <span class="accent">liên quan</span></h2>
+        <div class="section-divider"></div>
+      </div>
+      <a href="../categories/tham-lot-san-nhua-duc-tpe.html" class="view-all" id="related-link">Xem tất cả →</a>
+    </div>
+    <div class="products-grid" id="related-grid"></div>
+  </div>
+</main>
+
+<footer id="footer">
+  <div class="footer-main">
+    <div class="footer-brand">
+      <a href="../index.html" class="logo footer-logo"><div class="logo-wordmark"><span class="logo-h">H</span><span class="logo-car">Car</span></div><div class="logo-rule"></div><div class="logo-tagline">Bảo vệ sàn xê yêu</div></a>
+      <p>Chuyên cung cấp phụ kiện ô tô chất lượng cao — thảm lót sàn TPE, phụ kiện nội ngoại thất cho xe Nhật, Hàn phổ biến tại Việt Nam.</p>
+    </div>
+    <div class="footer-col"><h4>Sản phẩm</h4><ul><li><a href="../categories/tham-lot-san-nhua-duc-tpe.html">Thảm lót sàn TPE</a></li><li><a href="../categories/tham-lot-cop-nhua-duc-tpe.html">Thảm lót cốp xe</a></li></ul></div>
+    <div class="footer-col"><h4>Hỗ trợ</h4><ul><li><a href="#">Chính sách đổi trả</a></li><li><a href="#">Bảo hành</a></li><li><a href="#">Hướng dẫn mua hàng</a></li></ul></div>
+    <div class="footer-col"><h4>Liên hệ</h4><ul><li><div class="footer-contact-row"><span class="icon">📞</span><div><div class="lbl">Hotline</div><strong>0367.353.369</strong></div></div></li><li><div class="footer-contact-row"><span class="icon">✉️</span><div><div class="lbl">Email</div>info@hcar.vn</div></div></li></ul></div>
+  </div>
+  <div class="footer-bottom"><div class="footer-bottom-inner"><div class="footer-copy">© 2024 HCar. Phụ kiện ô tô chính hãng.</div><div class="footer-badges"><span class="payment-badge">VISA</span><span class="payment-badge">Momo</span><span class="payment-badge">ZaloPay</span><span class="payment-badge">COD</span></div></div></div>
+</footer>
+
+<!-- ORDER MODAL -->
+<div id="order-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.55);align-items:center;justify-content:center;padding:16px;" onclick="if(event.target===this) closeModal()">
+  <div style="background:#fff;border-radius:16px;padding:36px 32px;max-width:400px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.25);position:relative;">
+    <button onclick="closeModal()" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:22px;cursor:pointer;color:#aaa;line-height:1;">×</button>
+    <div style="width:64px;height:64px;background:#fff0ee;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px;">📞</div>
+    <h3 style="font-family:'Arial Black',sans-serif;font-size:20px;font-weight:900;margin:0 0 8px;color:#111;">Đặt hàng qua điện thoại</h3>
+    <p style="color:#666;font-size:14px;margin:0 0 24px;line-height:1.6;">Gọi ngay để được tư vấn và đặt hàng nhanh nhất.<br>Hỗ trợ <strong>8:00 – 20:00</strong> mỗi ngày.</p>
+    <a href="tel:0367353369" style="display:block;background:#E8190A;color:#fff;font-size:22px;font-weight:900;font-family:'Arial Black',sans-serif;letter-spacing:1px;padding:14px 24px;border-radius:10px;text-decoration:none;margin-bottom:12px;">0367.353.369</a>
+    <button onclick="closeModal()" style="background:none;border:1.5px solid #ddd;border-radius:8px;padding:10px 24px;font-size:14px;color:#666;cursor:pointer;width:100%;">Đóng</button>
+  </div>
+</div>
+
+<script>
+/* ── ALL PRODUCTS DATA ── */
+const ALL_PRODUCTS = {
+  /* THẢM SÀN */
+  'tham-lot-san-o-to-tpe-khuon-duc-toyota-veloz-cross':{name:'Thảm lót sàn ô tô TPE khuôn đúc Toyota Veloz Cross 2022+',brand:'Toyota',car:'Toyota Veloz Cross 2022 – nay',cat:'san',catName:'Thảm lót sàn TPE',catSlug:'tham-lot-san-nhua-duc-tpe',price:2100000,reviews:247,sold:'1.200+',rating:'4.9'},
+  'tham-lot-san-o-to-tpe-khuon-duc-toyota-camry':{name:'Thảm lót sàn ô tô TPE khuôn đúc Toyota Camry 2019–2024',brand:'Toyota',car:'Toyota Camry 2019 – 2024',cat:'san',catName:'Thảm lót sàn TPE',catSlug:'tham-lot-san-nhua-duc-tpe',price:2100000,reviews:183,sold:'950+',rating:'4.8'},
+  'tham-lot-san-o-to-tpe-nhua-duc-toyota-land-cruiser':{name:'Thảm lót sàn ô tô TPE khuôn đúc Toyota Land Cruiser 2022+',brand:'Toyota',car:'Toyota Land Cruiser 2022 – nay',cat:'san',catName:'Thảm lót sàn TPE',catSlug:'tham-lot-san-nhua-duc-tpe',price:2500000,reviews:92,sold:'430+',rating:'4.9'},
+  'tham-lot-san-o-to-tpe-khuon-duc-toyota-fortuner':{name:'Thảm lót sàn ô tô TPE khuôn đúc Toyota Fortuner 2017–2024',brand:'Toyota',car:'Toyota Fortuner 2017 – 2024',cat:'san',catName:'Thảm lót sàn TPE',catSlug:'tham-lot-san-nhua-duc-tpe',price:2100000,reviews:312,sold:'1.500+',rating:'4.9'},
+  'tham-lot-san-o-to-tpe-khuon-duc-toyota-innova-cross':{name:'Thảm lót sàn ô tô TPE khuôn đúc Toyota Innova Cross 2023+',brand:'Toyota',car:'Toyota Innova Cross 2023 – nay',cat:'san',catName:'Thảm lót sàn TPE',catSlug:'tham-lot-san-nhua-duc-tpe',price:2100000,reviews:64,sold:'280+',rating:'4.8'},
+  'tham-lot-san-o-to-tpe-khuon-duc-toyota-vios':{name:'Thảm lót sàn ô tô TPE khuôn đúc Toyota Vios 2023+',brand:'Toyota',car:'Toyota Vios 2023 – nay',cat:'san',catName:'Thảm lót sàn TPE',catSlug:'tham-lot-san-nhua-duc-tpe',price:1900000,reviews:128,sold:'600+',rating:'4.7'},
+  'tham-lot-san-o-to-tpe-khuon-duc-honda-crv':{name:'Thảm lót sàn ô tô TPE khuôn đúc Honda CR-V 5 chỗ 2017–2023',brand:'Honda',car:'Honda CR-V 5 chỗ 2017 – 2023',cat:'san',catName:'Thảm lót sàn TPE',catSlug:'tham-lot-san-nhua-duc-tpe',price:2100000,reviews:196,sold:'900+',rating:'4.8'},
+  'tham-lot-san-o-to-tpe-khuon-duc-honda-city':{name:'Thảm lót sàn ô tô TPE khuôn đúc Honda City 2021+',brand:'Honda',car:'Honda City 2021 – nay',cat:'san',catName:'Thảm lót sàn TPE',catSlug:'tham-lot-san-nhua-duc-tpe',price:1900000,reviews:145,sold:'700+',rating:'4.8'},
+  'tham-lot-san-o-to-tpe-khuon-duc-honda-hrv':{name:'Thảm lót sàn ô tô TPE khuôn đúc Honda HRV 2022+',brand:'Honda',car:'Honda HRV 2022 – nay',cat:'san',catName:'Thảm lót sàn TPE',catSlug:'tham-lot-san-nhua-duc-tpe',price:2100000,reviews:87,sold:'380+',rating:'4.7'},
+  'tham-lot-san-o-to-tpe-khuon-duc-honda-civic':{name:'Thảm lót sàn ô tô TPE khuôn đúc Honda Civic 2022+',brand:'Honda',car:'Honda Civic 2022 – nay',cat:'san',catName:'Thảm lót sàn TPE',catSlug:'tham-lot-san-nhua-duc-tpe',price:2100000,reviews:71,sold:'320+',rating:'4.8'},
+  'tham-lot-san-o-to-tpe-khuon-duc-mazda-cx5':{name:'Thảm lót sàn ô tô TPE khuôn đúc Mazda CX-5 2018–2024',brand:'Mazda',car:'Mazda CX-5 2018 – 2024',cat:'san',catName:'Thảm lót sàn TPE',catSlug:'tham-lot-san-nhua-duc-tpe',price:2100000,reviews:221,sold:'1.050+',rating:'4.9'},
+  'tham-lot-san-o-to-tpe-khuon-duc-mazda-cx8':{name:'Thảm lót sàn ô tô TPE khuôn đúc Mazda CX-8 2019–2024',brand:'Mazda',car:'Mazda CX-8 2019 – 2024',cat:'san',catName:'Thảm lót sàn TPE',catSlug:'tham-lot-san-nhua-duc-tpe',price:2300000,reviews:98,sold:'460+',rating:'4.8'},
+  'tham-lot-san-o-to-tpe-khuon-duc-mazda-3':{name:'Thảm lót sàn ô tô TPE khuôn đúc Mazda 3 Fastback 2020+',brand:'Mazda',car:'Mazda 3 Fastback 2020 – nay',cat:'san',catName:'Thảm lót sàn TPE',catSlug:'tham-lot-san-nhua-duc-tpe',price:1900000,reviews:113,sold:'530+',rating:'4.7'},
+  'tham-lot-san-o-to-tpe-khuon-duc-mazda-cx3':{name:'Thảm lót sàn ô tô TPE khuôn đúc Mazda CX-3 2024+',brand:'Mazda',car:'Mazda CX-3 2024 – nay',cat:'san',catName:'Thảm lót sàn TPE',catSlug:'tham-lot-san-nhua-duc-tpe',price:1900000,reviews:34,sold:'120+',rating:'4.8'},
+  'tham-lot-san-o-to-tpe-khuon-duc-hyundai-tucson':{name:'Thảm lót sàn ô tô TPE khuôn đúc Hyundai Tucson NX4 2022+',brand:'Hyundai',car:'Hyundai Tucson NX4 2022 – nay',cat:'san',catName:'Thảm lót sàn TPE',catSlug:'tham-lot-san-nhua-duc-tpe',price:2300000,reviews:167,sold:'780+',rating:'4.8'},
+  'tham-lot-san-o-to-tpe-khuon-duc-hyundai-santa-fe':{name:'Thảm lót sàn ô tô TPE khuôn đúc Hyundai Santa Fe 2021–2024',brand:'Hyundai',car:'Hyundai Santa Fe 2021 – 2024',cat:'san',catName:'Thảm lót sàn TPE',catSlug:'tham-lot-san-nhua-duc-tpe',price:2300000,reviews:142,sold:'650+',rating:'4.8'},
+  'tham-lot-san-o-to-tpe-khuon-duc-hyundai-accent':{name:'Thảm lót sàn ô tô TPE khuôn đúc Hyundai Accent 2021+',brand:'Hyundai',car:'Hyundai Accent 2021 – nay',cat:'san',catName:'Thảm lót sàn TPE',catSlug:'tham-lot-san-nhua-duc-tpe',price:1900000,reviews:89,sold:'420+',rating:'4.7'},
+  'tham-lot-san-o-to-tpe-khuon-duc-kia-sorento':{name:'Thảm lót sàn ô tô TPE khuôn đúc Kia Sorento 2021–2024',brand:'Kia',car:'Kia Sorento 2021 – 2024',cat:'san',catName:'Thảm lót sàn TPE',catSlug:'tham-lot-san-nhua-duc-tpe',price:2300000,reviews:154,sold:'720+',rating:'4.8'},
+  'tham-lot-san-o-to-tpe-khuon-duc-kia-k3':{name:'Thảm lót sàn ô tô TPE khuôn đúc Kia K3 2021+',brand:'Kia',car:'Kia K3 2021 – nay',cat:'san',catName:'Thảm lót sàn TPE',catSlug:'tham-lot-san-nhua-duc-tpe',price:1900000,reviews:76,sold:'350+',rating:'4.7'},
+  'tham-lot-san-o-to-tpe-khuon-duc-kia-sportage':{name:'Thảm lót sàn ô tô TPE khuôn đúc Kia Sportage NQ5 2023+',brand:'Kia',car:'Kia Sportage NQ5 2023 – nay',cat:'san',catName:'Thảm lót sàn TPE',catSlug:'tham-lot-san-nhua-duc-tpe',price:2300000,reviews:58,sold:'240+',rating:'4.8'},
+  'tham-lot-san-o-to-tpe-khuon-duc-mitsubishi-xpander':{name:'Thảm lót sàn ô tô TPE khuôn đúc Mitsubishi Xpander 2020+',brand:'Mitsubishi',car:'Mitsubishi Xpander 2020 – nay',cat:'san',catName:'Thảm lót sàn TPE',catSlug:'tham-lot-san-nhua-duc-tpe',price:2100000,reviews:108,sold:'510+',rating:'4.8'},
+  'tham-lot-san-o-to-tpe-khuon-duc-mitsubishi-outlander':{name:'Thảm lót sàn ô tô TPE khuôn đúc Mitsubishi Outlander 2023+',brand:'Mitsubishi',car:'Mitsubishi Outlander 2023 – nay',cat:'san',catName:'Thảm lót sàn TPE',catSlug:'tham-lot-san-nhua-duc-tpe',price:2300000,reviews:42,sold:'180+',rating:'4.8'},
+  'tham-lot-san-o-to-tpe-khuon-duc-nissan-terra':{name:'Thảm lót sàn ô tô TPE khuôn đúc Nissan Terra 2019+',brand:'Nissan',car:'Nissan Terra 2019 – nay',cat:'san',catName:'Thảm lót sàn TPE',catSlug:'tham-lot-san-nhua-duc-tpe',price:2100000,reviews:67,sold:'310+',rating:'4.7'},
+  'tham-lot-san-o-to-tpe-khuon-duc-mg5':{name:'Thảm lót sàn ô tô TPE khuôn đúc MG5 2022+',brand:'MG',car:'MG5 2022 – nay',cat:'san',catName:'Thảm lót sàn TPE',catSlug:'tham-lot-san-nhua-duc-tpe',price:2100000,reviews:49,sold:'200+',rating:'4.7'},
+  /* THẢM CỐP */
+  'tham-lot-cop-nhua-duc-tpe-toyota-fortuner':{name:'Thảm lót cốp TPE khuôn đúc Toyota Fortuner 2017+',brand:'Toyota',car:'Toyota Fortuner 2017 – nay',cat:'cop',catName:'Thảm lót cốp TPE',catSlug:'tham-lot-cop-nhua-duc-tpe',price:700000,reviews:187,sold:'880+',rating:'4.9'},
+  'tham-lot-cop-nhua-duc-tpe-toyota-veloz-cross':{name:'Thảm lót cốp TPE khuôn đúc Toyota Veloz Cross 2022+',brand:'Toyota',car:'Toyota Veloz Cross 2022 – nay',cat:'cop',catName:'Thảm lót cốp TPE',catSlug:'tham-lot-cop-nhua-duc-tpe',price:700000,reviews:134,sold:'620+',rating:'4.8'},
+  'tham-lot-cop-nhua-duc-tpe-toyota-innova-cross':{name:'Thảm lót cốp TPE khuôn đúc Toyota Innova Cross 2023+',brand:'Toyota',car:'Toyota Innova Cross 2023 – nay',cat:'cop',catName:'Thảm lót cốp TPE',catSlug:'tham-lot-cop-nhua-duc-tpe',price:700000,reviews:48,sold:'190+',rating:'4.8'},
+  'tham-lot-cop-nhua-duc-tpe-toyota-land-cruiser':{name:'Thảm lót cốp TPE khuôn đúc Toyota Land Cruiser 2022+',brand:'Toyota',car:'Toyota Land Cruiser 2022 – nay',cat:'cop',catName:'Thảm lót cốp TPE',catSlug:'tham-lot-cop-nhua-duc-tpe',price:750000,reviews:61,sold:'280+',rating:'4.9'},
+  'tham-lot-cop-nhua-duc-tpe-honda-crv':{name:'Thảm lót cốp TPE khuôn đúc Honda CR-V 2017–2023',brand:'Honda',car:'Honda CR-V 2017 – 2023',cat:'cop',catName:'Thảm lót cốp TPE',catSlug:'tham-lot-cop-nhua-duc-tpe',price:700000,reviews:142,sold:'670+',rating:'4.8'},
+  'tham-lot-cop-nhua-duc-tpe-honda-hrv':{name:'Thảm lót cốp TPE khuôn đúc Honda HRV 2022+',brand:'Honda',car:'Honda HRV 2022 – nay',cat:'cop',catName:'Thảm lót cốp TPE',catSlug:'tham-lot-cop-nhua-duc-tpe',price:700000,reviews:83,sold:'380+',rating:'4.7'},
+  'tham-lot-cop-nhua-duc-tpe-honda-city':{name:'Thảm lót cốp TPE khuôn đúc Honda City 2021+',brand:'Honda',car:'Honda City 2021 – nay',cat:'cop',catName:'Thảm lót cốp TPE',catSlug:'tham-lot-cop-nhua-duc-tpe',price:650000,reviews:96,sold:'440+',rating:'4.8'},
+  'tham-lot-cop-nhua-duc-tpe-mazda-cx5':{name:'Thảm lót cốp TPE khuôn đúc Mazda CX-5 2018–2024',brand:'Mazda',car:'Mazda CX-5 2018 – 2024',cat:'cop',catName:'Thảm lót cốp TPE',catSlug:'tham-lot-cop-nhua-duc-tpe',price:700000,reviews:118,sold:'550+',rating:'4.8'},
+  'tham-lot-cop-nhua-duc-tpe-mazda-cx8':{name:'Thảm lót cốp TPE khuôn đúc Mazda CX-8 2019+',brand:'Mazda',car:'Mazda CX-8 2019 – nay',cat:'cop',catName:'Thảm lót cốp TPE',catSlug:'tham-lot-cop-nhua-duc-tpe',price:750000,reviews:72,sold:'330+',rating:'4.8'},
+  'tham-lot-cop-nhua-duc-tpe-hyundai-tucson':{name:'Thảm lót cốp TPE khuôn đúc Hyundai Tucson NX4',brand:'Hyundai',car:'Hyundai Tucson NX4 2022 – nay',cat:'cop',catName:'Thảm lót cốp TPE',catSlug:'tham-lot-cop-nhua-duc-tpe',price:700000,reviews:95,sold:'440+',rating:'4.8'},
+  'tham-lot-cop-nhua-duc-tpe-hyundai-santa-fe':{name:'Thảm lót cốp TPE khuôn đúc Hyundai Santa Fe 2021+',brand:'Hyundai',car:'Hyundai Santa Fe 2021 – nay',cat:'cop',catName:'Thảm lót cốp TPE',catSlug:'tham-lot-cop-nhua-duc-tpe',price:700000,reviews:67,sold:'310+',rating:'4.7'},
+  'tham-lot-cop-nhua-duc-tpe-omoda-c5':{name:'Thảm lót cốp TPE khuôn đúc Omoda C5 2023+',brand:'Omoda',car:'Omoda C5 2023 – nay',cat:'cop',catName:'Thảm lót cốp TPE',catSlug:'tham-lot-cop-nhua-duc-tpe',price:700000,reviews:41,sold:'160+',rating:'4.8'},
+  'tham-op-lung-nhua-duc-tpe-omoda-c5':{name:'Thảm ốp lưng TPE khuôn đúc Omoda C5 2023+',brand:'Omoda',car:'Omoda C5 2023 – nay',cat:'cop',catName:'Thảm lót cốp TPE',catSlug:'tham-lot-cop-nhua-duc-tpe',price:700000,reviews:29,sold:'110+',rating:'4.8'},
+  'tham-lot-cop-nhua-duc-tpe-kia-sportage':{name:'Thảm lót cốp TPE khuôn đúc Kia Sportage NQ5 2023+',brand:'Kia',car:'Kia Sportage NQ5 2023 – nay',cat:'cop',catName:'Thảm lót cốp TPE',catSlug:'tham-lot-cop-nhua-duc-tpe',price:700000,reviews:38,sold:'150+',rating:'4.8'},
+};
+
+function fmtPrice(n){return n.toLocaleString('vi-VN').replace(/\./g,'.');}
+
+const THUMB_BG=[['#D4D8E4','#B8BDD0'],['#D4DDE8','#B0BFCC'],['#DDD4E2','#C0B0CC'],['#D4E2D8','#B4CCC0']];
+const THUMB_LABELS=['Góc tổng thể','Hàng trước','Hàng sau','Chi tiết gờ'];
+
+function drawMatCanvas(canvas,bg,mat,label){
+  const ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height;
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='rgba(255,255,255,0.4)';ctx.lineWidth=1;
+  for(let x=0;x<W;x+=Math.max(14,W/20)){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+  for(let y=0;y<H;y+=Math.max(14,H/14)){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+  const rw=W*.7,rh=H*.55,rx=(W-rw)/2,ry=(H-rh)/2,r=Math.max(8,W/30);
+  ctx.beginPath();ctx.moveTo(rx+r,ry);ctx.lineTo(rx+rw-r,ry);ctx.quadraticCurveTo(rx+rw,ry,rx+rw,ry+r);ctx.lineTo(rx+rw,ry+rh-r);ctx.quadraticCurveTo(rx+rw,ry+rh,rx+rw-r,ry+rh);ctx.lineTo(rx+r,ry+rh);ctx.quadraticCurveTo(rx,ry+rh,rx,ry+rh-r);ctx.lineTo(rx,ry+r);ctx.quadraticCurveTo(rx,ry,rx+r,ry);ctx.closePath();
+  ctx.fillStyle=mat;ctx.fill();
+  ctx.save();ctx.clip();
+  ctx.strokeStyle='rgba(255,255,255,0.4)';ctx.lineWidth=1;
+  for(let y2=ry;y2<ry+rh;y2+=9){ctx.beginPath();ctx.moveTo(rx,y2);ctx.lineTo(rx+rw,y2);ctx.stroke();}
+  ctx.restore();
+  ctx.strokeStyle='rgba(232,25,10,0.55)';ctx.lineWidth=Math.max(1.5,W/200);ctx.stroke();
+  const fs=Math.max(11,W/30);
+  ctx.fillStyle='rgba(232,25,10,0.85)';ctx.font=`bold ${fs}px Arial Black,sans-serif`;ctx.textAlign='center';ctx.fillText('HCAR',W/2,H/2+fs*0.4);
+  if(label){ctx.fillStyle='rgba(17,18,36,0.28)';ctx.font=`${Math.max(9,W/50)}px Arial,sans-serif`;ctx.fillText(label,W/2,H/2+fs*0.4+Math.max(13,W/30));}
+}
+
+/* ── INIT ── */
+const slug=new URLSearchParams(location.search).get('slug');
+const p=ALL_PRODUCTS[slug];
+
+if(!p){
+  document.getElementById('main-content').innerHTML='<div style="padding:100px 20px;text-align:center"><h2 style="font-size:28px;margin-bottom:16px;">Không tìm thấy sản phẩm</h2><p style="color:#888;margin-bottom:24px;">Sản phẩm bạn tìm kiếm không tồn tại hoặc đã ngừng kinh doanh.</p><a href="../index.html" style="background:#E8190A;color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;">← Về trang chủ</a></div>';
+} else {
+  const isCop=p.cat==='cop';
+  const oldPrice=Math.round(p.price/0.8);
+
+  document.getElementById('page-title').textContent=p.name+' — HCar';
+  document.getElementById('breadcrumb').innerHTML=`<a href="../index.html">Trang chủ</a><span class="breadcrumb-sep">›</span><a href="../categories/${p.catSlug}.html">${p.catName}</a><span class="breadcrumb-sep">›</span><span class="breadcrumb-current">${p.brand} ${p.car.split(' ').slice(1,4).join(' ')}</span>`;
+  document.getElementById('info-brand').textContent=p.brand+' — '+p.catName;
+  document.getElementById('info-name').textContent=p.name;
+  document.getElementById('info-rating').textContent=p.rating;
+  document.getElementById('info-rcount').textContent='('+p.reviews+' đánh giá)';
+  document.getElementById('info-sold').textContent='Đã bán '+p.sold;
+  document.getElementById('info-price').textContent=fmtPrice(p.price)+' ₫';
+  document.getElementById('info-old').textContent=fmtPrice(oldPrice)+' ₫';
+  document.getElementById('info-car').textContent=p.car;
+  document.getElementById('info-includes').textContent=isCop?'1 tấm lót cốp khít form xe':'Bộ 4 tấm (2 hàng trước + 2 hàng sau)';
+  document.getElementById('rev-score').textContent=p.rating;
+  document.getElementById('rev-count').textContent=p.reviews+' đánh giá';
+  document.getElementById('related-link').href='../categories/'+p.catSlug+'.html';
+
+  /* Description */
+  const descEl=document.getElementById('desc-content');
+  descEl.innerHTML=isCop
+    ?`<p><strong>Thảm lót cốp TPE khuôn đúc HCar</strong> được sản xuất từ nhựa nguyên sinh TPE cao cấp, đúc 3D theo đúng kích thước cốp xe ${p.car}, khít hoàn toàn từng đường nét.</p><p>Gờ chắn cao bảo vệ sàn cốp khỏi nước bẩn, bùn đất. Dễ tháo lắp, vệ sinh nhanh.</p><ul><li>Nhựa TPE nguyên sinh — không mùi, không phai màu</li><li>Đúc 3D khớp 100% form cốp ${p.car}</li><li>Gờ chắn nước cao, chống tràn tuyệt đối</li><li>Bề mặt chống trơn trượt</li><li>Bảo hành 12 tháng tại tất cả cơ sở HCar</li></ul>`
+    :`<p><strong>Thảm lót sàn TPE khuôn đúc HCar</strong> được sản xuất từ nhựa nguyên sinh TPE cao cấp, không chứa chất độc hại. Mỗi bộ đúc 3D theo đúng kích thước sàn xe ${p.car}.</p><p>Gờ chắn nước cao 1,5cm xung quanh, ngăn nước bẩn và bùn đất tràn ra sàn xe. Dễ tháo lắp và vệ sinh.</p><ul><li>Nhựa TPE nguyên sinh — không mùi, không phai màu</li><li>Đúc 3D khớp 100% form xe ${p.car}</li><li>Gờ chắn nước cao 1,5cm, chống tràn tuyệt đối</li><li>Bề mặt chống trơn trượt</li><li>Trọng lượng nhẹ, dễ lắp đặt và vệ sinh</li><li>Bảo hành 12 tháng tại tất cả cơ sở HCar toàn quốc</li></ul>`;
+
+  /* Specs */
+  const rows=isCop
+    ?[['Chất liệu','TPE nhựa nguyên sinh'],['Công nghệ','Khuôn đúc 3D Laser Scan'],['Áp dụng',p.car],['Bộ sản phẩm','1 tấm lót cốp'],['Độ dày','5mm ± 0,5mm'],['Màu sắc','Đen / Kem trắng'],['Bảo hành','12 tháng'],['Xuất xứ','Sản xuất tại Việt Nam']]
+    :[['Chất liệu','TPE nhựa nguyên sinh, không PVC/Phthalate'],['Công nghệ','Khuôn đúc 3D Laser Scan theo form xe'],['Áp dụng',p.car],['Bộ sản phẩm','4 tấm: 2 hàng trước + 2 hàng sau'],['Độ dày','6mm ± 0,5mm'],['Chiều cao gờ','15mm'],['Màu sắc','Đen / Kem trắng'],['Trọng lượng','~2,8 kg'],['Chứng nhận','SGS, RoHS'],['Bảo hành','12 tháng'],['Xuất xứ','Sản xuất tại Việt Nam']];
+  document.getElementById('specs-body').innerHTML=rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
+
+  /* Reviews */
+  const REVIEWS=[
+    {a:'Nguyễn Văn M.',d:'15/06/2024',s:'★★★★★',t:`Thảm khít hoàn toàn với xe ${p.brand}, chất nhựa cứng chắc. Giao hàng nhanh, sẽ ủng hộ thêm.`},
+    {a:'Trần Thị H.',d:'02/05/2024',s:'★★★★★',t:`Lắp vào ${p.car} rất vừa vặn. Gờ chắn nước tốt, màu đen nhìn sang. 5 sao không hối hận.`},
+    {a:'Phạm Quốc A.',d:'18/04/2024',s:'★★★★☆',t:'Chất lượng tốt, khít xe. Trừ 1 sao vì giao hàng hơi chậm. Còn lại rất hài lòng.'},
+  ];
+  document.getElementById('reviews-list').innerHTML=REVIEWS.map(r=>`<div class="review-card"><div class="review-card-head"><div class="review-avatar">${r.a[0]}</div><div><div class="review-author">${r.a}</div><div class="review-date">${r.d}</div></div><div class="review-stars" style="margin-left:auto;">${r.s}</div></div><div class="review-text">${r.t}</div><div class="review-verify">✓ Đã mua hàng tại HCar</div></div>`).join('');
+
+  /* Gallery */
+  const mainCanvas=document.getElementById('main-img');
+  mainCanvas.width=560;mainCanvas.height=420;
+  drawMatCanvas(mainCanvas,THUMB_BG[0][0],THUMB_BG[0][1],p.brand+' '+p.car.split(' ').slice(1,3).join(' '));
+  const thumbsContainer=document.getElementById('thumbs');
+  THUMB_BG.forEach((bg,i)=>{
+    const wrap=document.createElement('div');wrap.className='gallery-thumb'+(i===0?' active':'');
+    const c=document.createElement('canvas');c.width=144;c.height=108;drawMatCanvas(c,bg[0],bg[1],null);wrap.appendChild(c);
+    wrap.onclick=()=>{
+      document.querySelectorAll('.gallery-thumb').forEach(t=>t.classList.remove('active'));
+      wrap.classList.add('active');
+      mainCanvas.width=560;mainCanvas.height=420;
+      drawMatCanvas(mainCanvas,bg[0],bg[1],p.brand+' · '+THUMB_LABELS[i]);
+    };
+    thumbsContainer.appendChild(wrap);
+  });
+
+  /* Related products (same category, different brand or same brand) */
+  const related=Object.entries(ALL_PRODUCTS).filter(([s,r])=>s!==slug&&r.cat===p.cat).slice(0,4);
+  const MAT_COLORS=[['#D4D8E4','#B8BDD0'],['#D4DDE8','#B0BFCC'],['#DDD4E2','#C0B0CC'],['#D4E2D8','#B4CCC0']];
+  const rGrid=document.getElementById('related-grid');
+  related.forEach(([s,r],i)=>{
+    const oldP=Math.round(r.price/0.8);
+    const card=document.createElement('a');card.className='product-card';card.href='./san-pham.html?slug='+s;
+    card.innerHTML=`<div class="product-img"><canvas width="260" height="190" aria-hidden="true"></canvas><div class="badge-wrap"><span class="badge-sale">-20%</span></div></div><div class="product-body"><div class="product-brand">${r.brand}</div><div class="product-name">${r.name}</div><div class="product-price-row"><div><div class="p-price-main">${fmtPrice(r.price)} ₫</div><div class="p-price-old">${fmtPrice(oldP)} ₫</div></div><button class="btn-add" onclick="event.preventDefault()">+</button></div></div>`;
+    rGrid.appendChild(card);
+    const cv=card.querySelector('canvas');cv.width=260;cv.height=190;
+    drawMatCanvas(cv,MAT_COLORS[i][0],MAT_COLORS[i][1],null);
+  });
+}
+
+/* ── CONTROLS ── */
+function changeQty(delta){const inp=document.getElementById('qty');inp.value=Math.max(1,Math.min(99,parseInt(inp.value||1)+delta));}
+function selectVariant(btn){document.querySelectorAll('.variant-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+let cartCount=0;
+function addToCart(){cartCount++;document.getElementById('cart-badge').textContent=cartCount;const btn=document.querySelector('.btn-add-cart');const orig=btn.textContent;btn.textContent='✓ Đã thêm vào giỏ';btn.style.background='var(--accent)';btn.style.color='#fff';btn.style.border='2px solid var(--accent)';setTimeout(()=>{btn.textContent=orig;btn.style.background='';btn.style.color='';btn.style.border='';},1800);}
+function buyNow(){document.getElementById('order-modal').style.display='flex';}
+function closeModal(){document.getElementById('order-modal').style.display='none';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape') closeModal();});
+function switchTab(id,btn){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');btn.setAttribute('aria-selected','true');}
+
+const header=document.getElementById('header');
+window.addEventListener('scroll',()=>header.classList.toggle('scrolled',window.scrollY>40),{passive:true});
+</script>
+</body>
+</html>
