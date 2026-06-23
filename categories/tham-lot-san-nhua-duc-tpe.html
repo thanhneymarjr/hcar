@@ -65,18 +65,23 @@
         <div class="sidebar-block">
           <div class="sidebar-block-head">
             Hãng xe
-            <span style="font-size:11px;color:var(--text-faint);font-weight:400;">10 hãng</span>
+            <span style="font-size:11px;color:var(--text-faint);font-weight:400;">13 hãng</span>
           </div>
           <div class="sidebar-block-body">
             <div class="filter-list" id="brand-filter">
-              <label class="filter-item"><input type="checkbox" value="Toyota"> Toyota <span class="filter-count">6</span></label>
-              <label class="filter-item"><input type="checkbox" value="Honda"> Honda <span class="filter-count">4</span></label>
-              <label class="filter-item"><input type="checkbox" value="Mazda"> Mazda <span class="filter-count">4</span></label>
-              <label class="filter-item"><input type="checkbox" value="Hyundai"> Hyundai <span class="filter-count">3</span></label>
-              <label class="filter-item"><input type="checkbox" value="Kia"> Kia <span class="filter-count">3</span></label>
-              <label class="filter-item"><input type="checkbox" value="Mitsubishi"> Mitsubishi <span class="filter-count">2</span></label>
+              <label class="filter-item"><input type="checkbox" value="Toyota"> Toyota <span class="filter-count">13</span></label>
+              <label class="filter-item"><input type="checkbox" value="Hyundai"> Hyundai <span class="filter-count">11</span></label>
+              <label class="filter-item"><input type="checkbox" value="Kia"> Kia <span class="filter-count">7</span></label>
+              <label class="filter-item"><input type="checkbox" value="Mazda"> Mazda <span class="filter-count">7</span></label>
+              <label class="filter-item"><input type="checkbox" value="Mitsubishi"> Mitsubishi <span class="filter-count">7</span></label>
+              <label class="filter-item"><input type="checkbox" value="Vinfast"> Vinfast <span class="filter-count">7</span></label>
+              <label class="filter-item"><input type="checkbox" value="Honda"> Honda <span class="filter-count">6</span></label>
+              <label class="filter-item"><input type="checkbox" value="Ford"> Ford <span class="filter-count">4</span></label>
+              <label class="filter-item"><input type="checkbox" value="Peugeot"> Peugeot <span class="filter-count">3</span></label>
+              <label class="filter-item"><input type="checkbox" value="BYD"> BYD <span class="filter-count">2</span></label>
+              <label class="filter-item"><input type="checkbox" value="Isuzu"> Isuzu <span class="filter-count">2</span></label>
+              <label class="filter-item"><input type="checkbox" value="MG"> MG <span class="filter-count">2</span></label>
               <label class="filter-item"><input type="checkbox" value="Nissan"> Nissan <span class="filter-count">1</span></label>
-              <label class="filter-item"><input type="checkbox" value="MG"> MG <span class="filter-count">1</span></label>
             </div>
           </div>
         </div>
@@ -125,10 +130,18 @@
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;" id="brand-chips">
           <button class="brand-chip active" onclick="filterBrand(this,'all')"><span class="dot"></span>Tất cả</button>
           <button class="brand-chip" onclick="filterBrand(this,'Toyota')"><span class="dot"></span>Toyota</button>
-          <button class="brand-chip" onclick="filterBrand(this,'Honda')"><span class="dot"></span>Honda</button>
-          <button class="brand-chip" onclick="filterBrand(this,'Mazda')"><span class="dot"></span>Mazda</button>
           <button class="brand-chip" onclick="filterBrand(this,'Hyundai')"><span class="dot"></span>Hyundai</button>
           <button class="brand-chip" onclick="filterBrand(this,'Kia')"><span class="dot"></span>Kia</button>
+          <button class="brand-chip" onclick="filterBrand(this,'Mazda')"><span class="dot"></span>Mazda</button>
+          <button class="brand-chip" onclick="filterBrand(this,'Mitsubishi')"><span class="dot"></span>Mitsubishi</button>
+          <button class="brand-chip" onclick="filterBrand(this,'Vinfast')"><span class="dot"></span>Vinfast</button>
+          <button class="brand-chip" onclick="filterBrand(this,'Honda')"><span class="dot"></span>Honda</button>
+          <button class="brand-chip" onclick="filterBrand(this,'Ford')"><span class="dot"></span>Ford</button>
+          <button class="brand-chip" onclick="filterBrand(this,'Peugeot')"><span class="dot"></span>Peugeot</button>
+          <button class="brand-chip" onclick="filterBrand(this,'BYD')"><span class="dot"></span>BYD</button>
+          <button class="brand-chip" onclick="filterBrand(this,'Isuzu')"><span class="dot"></span>Isuzu</button>
+          <button class="brand-chip" onclick="filterBrand(this,'MG')"><span class="dot"></span>MG</button>
+          <button class="brand-chip" onclick="filterBrand(this,'Nissan')"><span class="dot"></span>Nissan</button>
         </div>
 
         <!-- Product grid -->
@@ -162,30 +175,91 @@
 
 <script>
 const PRODUCTS=[
-  {name:'Thảm TPE Toyota Veloz Cross 2022+',brand:'Toyota',priceNum:2100000,price:'2.100.000',old:'2.625.000',sale:20,hot:true,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-toyota-veloz-cross'},
-  {name:'Thảm TPE Toyota Camry 2019–2024',brand:'Toyota',priceNum:2100000,price:'2.100.000',old:'2.625.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-toyota-camry'},
-  {name:'Thảm TPE Toyota Land Cruiser 2022+',brand:'Toyota',priceNum:2500000,price:'2.500.000',old:'3.125.000',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-nhua-duc-toyota-land-cruiser'},
-  {name:'Thảm TPE Toyota Fortuner 2017–2024',brand:'Toyota',priceNum:2100000,price:'2.100.000',old:'2.625.000',sale:20,hot:true,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-toyota-fortuner'},
-  {name:'Thảm TPE Toyota Innova Cross 2023+',brand:'Toyota',priceNum:2100000,price:'2.100.000',old:'2.625.000',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-toyota-innova-cross'},
-  {name:'Thảm TPE Toyota Vios 2023+',brand:'Toyota',priceNum:1900000,price:'1.900.000',old:'2.375.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-toyota-vios'},
-  {name:'Thảm TPE Honda CR-V 5 chỗ 2017–2023',brand:'Honda',priceNum:2100000,price:'2.100.000',old:'2.625.000',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-honda-crv'},
-  {name:'Thảm TPE Honda City 2021+',brand:'Honda',priceNum:1900000,price:'1.900.000',old:'2.375.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-honda-city'},
-  {name:'Thảm TPE Honda HRV 2022+',brand:'Honda',priceNum:2100000,price:'2.100.000',old:'2.625.000',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-honda-hrv'},
-  {name:'Thảm TPE Honda Civic 2022+',brand:'Honda',priceNum:2100000,price:'2.100.000',old:'2.625.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-honda-civic'},
-  {name:'Thảm TPE Mazda CX-5 2018–2024',brand:'Mazda',priceNum:2100000,price:'2.100.000',old:'2.625.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-mazda-cx5'},
-  {name:'Thảm TPE Mazda CX-8 2019–2024',brand:'Mazda',priceNum:2300000,price:'2.300.000',old:'2.875.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-mazda-cx8'},
-  {name:'Thảm TPE Mazda 3 Fastback 2020+',brand:'Mazda',priceNum:1900000,price:'1.900.000',old:'2.375.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-mazda-3'},
-  {name:'Thảm TPE Mazda CX-3 2024+',brand:'Mazda',priceNum:1900000,price:'1.900.000',old:'2.375.000',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-mazda-cx3'},
-  {name:'Thảm TPE Hyundai Tucson NX4 2022+',brand:'Hyundai',priceNum:2300000,price:'2.300.000',old:'2.875.000',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-hyundai-tucson'},
-  {name:'Thảm TPE Hyundai Santa Fe 2021–2024',brand:'Hyundai',priceNum:2300000,price:'2.300.000',old:'2.875.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-hyundai-santa-fe'},
-  {name:'Thảm TPE Hyundai Accent 2021+',brand:'Hyundai',priceNum:1900000,price:'1.900.000',old:'2.375.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-hyundai-accent'},
-  {name:'Thảm TPE Kia Sorento 2021–2024',brand:'Kia',priceNum:2300000,price:'2.300.000',old:'2.875.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-kia-sorento'},
-  {name:'Thảm TPE Kia K3 2021+',brand:'Kia',priceNum:1900000,price:'1.900.000',old:'2.375.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-kia-k3'},
-  {name:'Thảm TPE Kia Sportage NQ5 2023+',brand:'Kia',priceNum:2300000,price:'2.300.000',old:'2.875.000',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-kia-sportage'},
-  {name:'Thảm TPE Mitsubishi Xpander 2020+',brand:'Mitsubishi',priceNum:2100000,price:'2.100.000',old:'2.625.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-mitsubishi-xpander'},
-  {name:'Thảm TPE Mitsubishi Outlander 2023+',brand:'Mitsubishi',priceNum:2300000,price:'2.300.000',old:'2.875.000',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-mitsubishi-outlander'},
-  {name:'Thảm TPE Nissan Terra 2019+',brand:'Nissan',priceNum:2100000,price:'2.100.000',old:'2.625.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-nissan-terra'},
-  {name:'Thảm TPE MG5 2022+',brand:'MG',priceNum:2100000,price:'2.100.000',old:'2.625.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-mg5'},
+  /* TOYOTA */
+  {name:'Thảm lót sàn Toyota Vios 2014–2026',brand:'Toyota',priceNum:1700000,price:'1.700.000',old:'2.125.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-toyota-vios'},
+  {name:'Thảm lót sàn Toyota Veloz 2022–2026',brand:'Toyota',priceNum:2000000,price:'2.000.000',old:'2.500.000',sale:20,hot:true,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-toyota-veloz-cross'},
+  {name:'Thảm lót sàn Toyota Corolla Altis 2019–2026',brand:'Toyota',priceNum:1800000,price:'1.800.000',old:'2.250.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-toyota-corolla-altis'},
+  {name:'Thảm lót sàn Toyota Fortuner 2017–2026',brand:'Toyota',priceNum:2050000,price:'2.050.000',old:'2.562.500',sale:20,hot:true,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-toyota-fortuner'},
+  {name:'Thảm lót sàn Toyota Innova Cross 2023–2026',brand:'Toyota',priceNum:2550000,price:'2.550.000',old:'3.187.500',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-toyota-innova-cross'},
+  {name:'Thảm lót sàn Toyota Innova 2017–2022',brand:'Toyota',priceNum:2000000,price:'2.000.000',old:'2.500.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-toyota-innova'},
+  {name:'Thảm lót sàn Toyota Camry 2019–2026',brand:'Toyota',priceNum:1750000,price:'1.750.000',old:'2.187.500',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-toyota-camry'},
+  {name:'Thảm lót sàn Toyota Corolla Cross 2020–2022',brand:'Toyota',priceNum:1700000,price:'1.700.000',old:'2.125.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-toyota-corolla-cross'},
+  {name:'Thảm lót sàn Toyota Hilux 2016–2025',brand:'Toyota',priceNum:1750000,price:'1.750.000',old:'2.187.500',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-toyota-hilux'},
+  {name:'Thảm lót sàn Toyota Yaris Cross 2023–2026',brand:'Toyota',priceNum:1690000,price:'1.690.000',old:'2.112.500',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-toyota-yaris-cross'},
+  {name:'Thảm lót sàn Toyota Raize 2020–2026',brand:'Toyota',priceNum:1700000,price:'1.700.000',old:'2.125.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-toyota-raize'},
+  {name:'Thảm lót sàn Toyota Wigo 2023–2026',brand:'Toyota',priceNum:1700000,price:'1.700.000',old:'2.125.000',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-toyota-wigo'},
+  {name:'Thảm lót sàn Toyota Land Cruiser 2022+',brand:'Toyota',priceNum:2500000,price:'2.500.000',old:'3.125.000',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-nhua-duc-toyota-land-cruiser'},
+  /* HONDA */
+  {name:'Thảm lót sàn Honda CRV 2018–2023',brand:'Honda',priceNum:1715000,price:'1.715.000',old:'2.143.750',sale:20,hot:true,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-honda-crv'},
+  {name:'Thảm lót sàn Honda CRV 2024–2026',brand:'Honda',priceNum:2100000,price:'2.100.000',old:'2.625.000',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-honda-crv-2024'},
+  {name:'Thảm lót sàn Honda City 2021–2026',brand:'Honda',priceNum:1600000,price:'1.600.000',old:'2.000.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-honda-city'},
+  {name:'Thảm lót sàn Honda Civic 2022–2026',brand:'Honda',priceNum:1800000,price:'1.800.000',old:'2.250.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-honda-civic'},
+  {name:'Thảm lót sàn Honda HRV 2022–2025',brand:'Honda',priceNum:1600000,price:'1.600.000',old:'2.000.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-honda-hrv'},
+  {name:'Thảm lót sàn Honda BRV 2023–2026',brand:'Honda',priceNum:2100000,price:'2.100.000',old:'2.625.000',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-honda-brv'},
+  /* MAZDA */
+  {name:'Thảm lót sàn Mazda CX5 2018–2026',brand:'Mazda',priceNum:1700000,price:'1.700.000',old:'2.125.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-mazda-cx5'},
+  {name:'Thảm lót sàn Mazda CX8 2019–2026',brand:'Mazda',priceNum:1950000,price:'1.950.000',old:'2.437.500',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-mazda-cx8'},
+  {name:'Thảm lót sàn Mazda CX3 2021–2026',brand:'Mazda',priceNum:1750000,price:'1.750.000',old:'2.187.500',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-mazda-cx3'},
+  {name:'Thảm lót sàn Mazda CX30 2020–2026',brand:'Mazda',priceNum:1760000,price:'1.760.000',old:'2.200.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-mazda-cx30'},
+  {name:'Thảm lót sàn Mazda 3 2020–2026',brand:'Mazda',priceNum:1800000,price:'1.800.000',old:'2.250.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-mazda-3'},
+  {name:'Thảm lót sàn Mazda 3 2014–2019',brand:'Mazda',priceNum:1700000,price:'1.700.000',old:'2.125.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-mazda-3-2014'},
+  {name:'Thảm lót sàn Mazda 2 2016–2026',brand:'Mazda',priceNum:1750000,price:'1.750.000',old:'2.187.500',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-mazda-2'},
+  /* HYUNDAI */
+  {name:'Thảm lót sàn Hyundai I10 2022–2025',brand:'Hyundai',priceNum:1750000,price:'1.750.000',old:'2.187.500',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-hyundai-i10'},
+  {name:'Thảm lót sàn Hyundai Accent 2018–2023',brand:'Hyundai',priceNum:1700000,price:'1.700.000',old:'2.125.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-hyundai-accent'},
+  {name:'Thảm lót sàn Hyundai Accent 2024–2026',brand:'Hyundai',priceNum:2100000,price:'2.100.000',old:'2.625.000',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-hyundai-accent-2024'},
+  {name:'Thảm lót sàn Hyundai Creta 2022–2026',brand:'Hyundai',priceNum:1800000,price:'1.800.000',old:'2.250.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-hyundai-creta'},
+  {name:'Thảm lót sàn Hyundai Tucson 2022–2026',brand:'Hyundai',priceNum:1750000,price:'1.750.000',old:'2.187.500',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-hyundai-tucson'},
+  {name:'Thảm lót sàn Hyundai Santa Fe 2019–2024',brand:'Hyundai',priceNum:2000000,price:'2.000.000',old:'2.500.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-hyundai-santa-fe'},
+  {name:'Thảm lót sàn Hyundai Santa Fe All New 2025–2026',brand:'Hyundai',priceNum:2100000,price:'2.100.000',old:'2.625.000',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-hyundai-santa-fe-allnew'},
+  {name:'Thảm lót sàn Hyundai Venue 2023–2026',brand:'Hyundai',priceNum:1700000,price:'1.700.000',old:'2.125.000',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-hyundai-venue'},
+  {name:'Thảm lót sàn Hyundai Stargazer 2023–2026',brand:'Hyundai',priceNum:1950000,price:'1.950.000',old:'2.437.500',sale:20,hot:true,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-hyundai-stargazer'},
+  {name:'Thảm lót sàn Hyundai Custin 2023–2026',brand:'Hyundai',priceNum:2100000,price:'2.100.000',old:'2.625.000',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-hyundai-custin'},
+  {name:'Thảm lót sàn Hyundai Elantra 2022–2026',brand:'Hyundai',priceNum:1600000,price:'1.600.000',old:'2.000.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-hyundai-elantra'},
+  /* KIA */
+  {name:'Thảm lót sàn Kia Soluto 2019–2026',brand:'Kia',priceNum:1700000,price:'1.700.000',old:'2.125.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-kia-soluto'},
+  {name:'Thảm lót sàn Kia Carens 2022–2026',brand:'Kia',priceNum:2000000,price:'2.000.000',old:'2.500.000',sale:20,hot:true,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-kia-carens'},
+  {name:'Thảm lót sàn Kia K3 Cerato 2019–2026',brand:'Kia',priceNum:1750000,price:'1.750.000',old:'2.187.500',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-kia-k3'},
+  {name:'Thảm lót sàn Kia Seltos 2020–2026',brand:'Kia',priceNum:1690000,price:'1.690.000',old:'2.112.500',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-kia-seltos'},
+  {name:'Thảm lót sàn Kia Sorento 2021–2026',brand:'Kia',priceNum:2100000,price:'2.100.000',old:'2.625.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-kia-sorento'},
+  {name:'Thảm lót sàn Kia Sonet 2021–2026',brand:'Kia',priceNum:1600000,price:'1.600.000',old:'2.000.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-kia-sonet'},
+  {name:'Thảm lót sàn Kia Sportage NQ5 2023+',brand:'Kia',priceNum:2300000,price:'2.300.000',old:'2.875.000',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-kia-sportage'},
+  /* MITSUBISHI */
+  {name:'Thảm lót sàn Mitsubishi Xpander 2018–2026',brand:'Mitsubishi',priceNum:2100000,price:'2.100.000',old:'2.625.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-mitsubishi-xpander'},
+  {name:'Thảm lót sàn Mitsubishi Pajero Sport 5D 2019–2026',brand:'Mitsubishi',priceNum:2000000,price:'2.000.000',old:'2.500.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-mitsubishi-pajero-sport'},
+  {name:'Thảm lót sàn Mitsubishi Triton New 2025–2026',brand:'Mitsubishi',priceNum:1750000,price:'1.750.000',old:'2.187.500',sale:20,hot:true,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-mitsubishi-triton'},
+  {name:'Thảm lót sàn Mitsubishi Outlander 5D 2019–2025',brand:'Mitsubishi',priceNum:2100000,price:'2.100.000',old:'2.625.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-mitsubishi-outlander'},
+  {name:'Thảm lót sàn Mitsubishi Attrage 2013–2026',brand:'Mitsubishi',priceNum:1650000,price:'1.650.000',old:'2.062.500',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-mitsubishi-attrage'},
+  {name:'Thảm lót sàn Mitsubishi Destinator 2025–2026',brand:'Mitsubishi',priceNum:2080000,price:'2.080.000',old:'2.600.000',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-mitsubishi-destinator'},
+  {name:'Thảm lót sàn Mitsubishi Xforce 2024+',brand:'Mitsubishi',priceNum:1750000,price:'1.750.000',old:'2.187.500',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-mitsubishi-xforce'},
+  /* FORD */
+  {name:'Thảm lót sàn Ford Ranger 2012–2022',brand:'Ford',priceNum:1750000,price:'1.750.000',old:'2.187.500',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-ford-ranger-2012'},
+  {name:'Thảm lót sàn Ford Ranger 2023–2026',brand:'Ford',priceNum:1750000,price:'1.750.000',old:'2.187.500',sale:20,hot:true,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-ford-ranger-2023'},
+  {name:'Thảm lót sàn Ford Everest 5D 2023–2025',brand:'Ford',priceNum:2050000,price:'2.050.000',old:'2.562.500',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-ford-everest'},
+  {name:'Thảm lót sàn Ford Territory 5D 2022–2026',brand:'Ford',priceNum:1800000,price:'1.800.000',old:'2.250.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-ford-territory'},
+  /* ISUZU */
+  {name:'Thảm lót sàn Isuzu Mux 2020–2026',brand:'Isuzu',priceNum:2100000,price:'2.100.000',old:'2.625.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-isuzu-mux'},
+  {name:'Thảm lót sàn Isuzu Dmax 2021–2026',brand:'Isuzu',priceNum:1750000,price:'1.750.000',old:'2.187.500',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-isuzu-dmax'},
+  /* VINFAST */
+  {name:'Thảm lót sàn Vinfast VF3 All New 2024–2025',brand:'Vinfast',priceNum:1600000,price:'1.600.000',old:'2.000.000',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-vinfast-vf3'},
+  {name:'Thảm lót sàn Vinfast VF5 5D 2023–2026',brand:'Vinfast',priceNum:1600000,price:'1.600.000',old:'2.000.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-vinfast-vf5'},
+  {name:'Thảm lót sàn Vinfast VF6 2023–2025',brand:'Vinfast',priceNum:1600000,price:'1.600.000',old:'2.000.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-vinfast-vf6'},
+  {name:'Thảm lót sàn Vinfast VF7 2023–2025',brand:'Vinfast',priceNum:1600000,price:'1.600.000',old:'2.000.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-vinfast-vf7'},
+  {name:'Thảm lót sàn Vinfast VF8 2023–2025',brand:'Vinfast',priceNum:1700000,price:'1.700.000',old:'2.125.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-vinfast-vf8'},
+  {name:'Thảm lót sàn Vinfast Lux SA 2019–2023',brand:'Vinfast',priceNum:1950000,price:'1.950.000',old:'2.437.500',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-vinfast-lux-sa'},
+  {name:'Thảm lót sàn Vinfast Limo Green MPV7 2025–2026',brand:'Vinfast',priceNum:2050000,price:'2.050.000',old:'2.562.500',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-vinfast-mpv7'},
+  /* PEUGEOT */
+  {name:'Thảm lót sàn Peugeot 3008 2019–2026',brand:'Peugeot',priceNum:1800000,price:'1.800.000',old:'2.250.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-peugeot-3008'},
+  {name:'Thảm lót sàn Peugeot 5008 2017–2025',brand:'Peugeot',priceNum:2100000,price:'2.100.000',old:'2.625.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-peugeot-5008'},
+  {name:'Thảm lót sàn Peugeot 2008 2022–2026',brand:'Peugeot',priceNum:1750000,price:'1.750.000',old:'2.187.500',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-peugeot-2008'},
+  /* BYD */
+  {name:'Thảm lót sàn BYD Sealion 6 2025–2026',brand:'BYD',priceNum:1750000,price:'1.750.000',old:'2.187.500',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-byd-sealion6'},
+  {name:'Thảm lót sàn BYD M6 2024–2026',brand:'BYD',priceNum:2000000,price:'2.000.000',old:'2.500.000',sale:20,hot:false,newBadge:true,slug:'tham-lot-san-o-to-tpe-khuon-duc-byd-m6'},
+  /* MG */
+  {name:'Thảm lót sàn MG ZS 2020–2026',brand:'MG',priceNum:1750000,price:'1.750.000',old:'2.187.500',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-mg-zs'},
+  {name:'Thảm lót sàn MG5 2022+',brand:'MG',priceNum:2100000,price:'2.100.000',old:'2.625.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-mg5'},
+  /* NISSAN */
+  {name:'Thảm lót sàn Nissan Terra 2019+',brand:'Nissan',priceNum:2100000,price:'2.100.000',old:'2.625.000',sale:20,hot:false,newBadge:false,slug:'tham-lot-san-o-to-tpe-khuon-duc-nissan-terra'},
 ];
 const PAGE_SIZE=6;
 const MAT_COLORS=[['#D4D8E4','#B8BDD0'],['#D4DDE8','#B0BFCC'],['#DDD4E2','#C0B0CC'],['#D4E2D8','#B4CCC0'],['#E2D8D4','#CCB8B0'],['#D4E0E0','#B0C4C4'],['#E2D4D4','#CCB0B0'],['#D4D8E8','#B4BCCC'],['#E4D8D4','#CCB4B0'],['#D8E4D4','#B4CCA8'],['#D8D4E4','#B8B0CC'],['#E4E4D4','#CCCCA8']];
