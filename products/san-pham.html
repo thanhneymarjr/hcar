@@ -316,26 +316,33 @@ const ALL_PRODUCTS = {
 
 function fmtPrice(n){return n.toLocaleString('vi-VN').replace(/\./g,'.');}
 
-const THUMB_BG=[['#D4D8E4','#B8BDD0'],['#D4DDE8','#B0BFCC'],['#DDD4E2','#C0B0CC'],['#D4E2D8','#B4CCC0']];
 const THUMB_LABELS=['Góc tổng thể','Hàng trước','Hàng sau','Chi tiết gờ'];
-
-function drawMatCanvas(canvas,bg,mat,label){
+const BRAND_COLORS={Toyota:{a:'#EB0A1E',bg:'#FDF5F5'},Honda:{a:'#CC0000',bg:'#FDF5F5'},Mazda:{a:'#8B1A2F',bg:'#F8EDEF'},Hyundai:{a:'#002C5F',bg:'#EEF3FA'},Kia:{a:'#BB162B',bg:'#FDF6F6'},Mitsubishi:{a:'#B3001B',bg:'#FDF5F5'},Ford:{a:'#003499',bg:'#EEF2FF'},Vinfast:{a:'#007AC2',bg:'#EEF8FF'},Peugeot:{a:'#2D5BE3',bg:'#EEF2FF'},BYD:{a:'#1B7E3F',bg:'#EEF9F3'},Isuzu:{a:'#D2232A',bg:'#FDF5F5'},MG:{a:'#E4002B',bg:'#FDF5F5'},Nissan:{a:'#C3002F',bg:'#FDF5F5'},Omoda:{a:'#FF6B00',bg:'#FFF6EE'}};
+function drawMatBrand(canvas,brand,modelName){
   const ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height;
-  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-  ctx.strokeStyle='rgba(255,255,255,0.4)';ctx.lineWidth=1;
-  for(let x=0;x<W;x+=Math.max(14,W/20)){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
-  for(let y=0;y<H;y+=Math.max(14,H/14)){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
-  const rw=W*.7,rh=H*.55,rx=(W-rw)/2,ry=(H-rh)/2,r=Math.max(8,W/30);
-  ctx.beginPath();ctx.moveTo(rx+r,ry);ctx.lineTo(rx+rw-r,ry);ctx.quadraticCurveTo(rx+rw,ry,rx+rw,ry+r);ctx.lineTo(rx+rw,ry+rh-r);ctx.quadraticCurveTo(rx+rw,ry+rh,rx+rw-r,ry+rh);ctx.lineTo(rx+r,ry+rh);ctx.quadraticCurveTo(rx,ry+rh,rx,ry+rh-r);ctx.lineTo(rx,ry+r);ctx.quadraticCurveTo(rx,ry,rx+r,ry);ctx.closePath();
-  ctx.fillStyle=mat;ctx.fill();
+  const bc=BRAND_COLORS[brand]||{a:'#D43212',bg:'#FDF5F5'};
+  ctx.fillStyle=bc.bg;ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='rgba(0,0,0,0.04)';ctx.lineWidth=1;
+  for(let x=0;x<W;x+=Math.max(12,W/22)){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+  for(let y=0;y<H;y+=Math.max(12,H/18)){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+  ctx.fillStyle=bc.a;ctx.fillRect(0,0,W,Math.max(6,H*0.07));
+  const fs1=Math.max(13,W*0.062);ctx.fillStyle=bc.a;ctx.font='bold '+fs1+'px Arial Black,sans-serif';ctx.textAlign='center';ctx.fillText(brand.toUpperCase(),W/2,H*0.21);
+  const mx=W*0.08,my=H*0.28,mw=W*0.84,mh=H*0.42,mr=Math.max(8,W*0.03);
+  ctx.shadowColor='rgba(0,0,0,0.2)';ctx.shadowBlur=W*0.05;ctx.shadowOffsetY=H*0.025;
+  ctx.beginPath();ctx.moveTo(mx+mr,my);ctx.lineTo(mx+mw-mr,my);ctx.quadraticCurveTo(mx+mw,my,mx+mw,my+mr);ctx.lineTo(mx+mw,my+mh-mr);ctx.quadraticCurveTo(mx+mw,my+mh,mx+mw-mr,my+mh);ctx.lineTo(mx+mr,my+mh);ctx.quadraticCurveTo(mx,my+mh,mx,my+mh-mr);ctx.lineTo(mx,my+mr);ctx.quadraticCurveTo(mx,my,mx+mr,my);ctx.closePath();
+  ctx.fillStyle='#2A2A2C';ctx.fill();ctx.shadowColor='transparent';
   ctx.save();ctx.clip();
-  ctx.strokeStyle='rgba(255,255,255,0.4)';ctx.lineWidth=1;
-  for(let y2=ry;y2<ry+rh;y2+=9){ctx.beginPath();ctx.moveTo(rx,y2);ctx.lineTo(rx+rw,y2);ctx.stroke();}
+  const rh2=Math.max(4,H*0.022);
+  for(let y2=my+rh2;y2<my+mh;y2+=rh2*2){ctx.fillStyle='rgba(255,255,255,0.07)';ctx.fillRect(mx,y2,mw,rh2);}
+  const pd=Math.max(6,W*0.028);ctx.strokeStyle='rgba(255,255,255,0.15)';ctx.lineWidth=1;ctx.strokeRect(mx+pd,my+pd,mw-pd*2,mh-pd*2);
+  ctx.fillStyle='rgba(255,255,255,0.09)';ctx.font='bold '+Math.max(10,W*0.055)+'px Arial Black,sans-serif';ctx.textAlign='center';ctx.fillText('HCAR',W/2,my+mh*0.58);
   ctx.restore();
-  ctx.strokeStyle='rgba(232,25,10,0.55)';ctx.lineWidth=Math.max(1.5,W/200);ctx.stroke();
-  const fs=Math.max(11,W/30);
-  ctx.fillStyle='rgba(232,25,10,0.85)';ctx.font=`bold ${fs}px Arial Black,sans-serif`;ctx.textAlign='center';ctx.fillText('HCAR',W/2,H/2+fs*0.4);
-  if(label){ctx.fillStyle='rgba(17,18,36,0.28)';ctx.font=`${Math.max(9,W/50)}px Arial,sans-serif`;ctx.fillText(label,W/2,H/2+fs*0.4+Math.max(13,W/30));}
+  ctx.strokeStyle=bc.a+'99';ctx.lineWidth=Math.max(1.5,W*0.006);
+  ctx.beginPath();ctx.moveTo(mx+mr,my);ctx.lineTo(mx+mw-mr,my);ctx.quadraticCurveTo(mx+mw,my,mx+mw,my+mr);ctx.lineTo(mx+mw,my+mh-mr);ctx.quadraticCurveTo(mx+mw,my+mh,mx+mw-mr,my+mh);ctx.lineTo(mx+mr,my+mh);ctx.quadraticCurveTo(mx,my+mh,mx,my+mh-mr);ctx.lineTo(mx,my+mr);ctx.quadraticCurveTo(mx,my,mx+mr,my);ctx.closePath();ctx.stroke();
+  if(modelName){const fs2=Math.max(9,W*0.038);ctx.fillStyle='#444';ctx.font=fs2+'px Arial,sans-serif';ctx.textAlign='center';let txt=modelName;while(ctx.measureText(txt).width>W*0.86&&txt.length>2)txt=txt.slice(0,-1);if(txt!==modelName)txt+='…';ctx.fillText(txt,W/2,H*0.83);}
+  const bw=Math.max(32,W*0.13),bh=Math.max(14,H*0.072),bx=W/2-bw/2,by=H*0.895;
+  ctx.fillStyle=bc.a;ctx.beginPath();ctx.moveTo(bx+3,by);ctx.lineTo(bx+bw-3,by);ctx.quadraticCurveTo(bx+bw,by,bx+bw,by+3);ctx.lineTo(bx+bw,by+bh-3);ctx.quadraticCurveTo(bx+bw,by+bh,bx+bw-3,by+bh);ctx.lineTo(bx+3,by+bh);ctx.quadraticCurveTo(bx,by+bh,bx,by+bh-3);ctx.lineTo(bx,by+3);ctx.quadraticCurveTo(bx,by,bx+3,by);ctx.closePath();ctx.fill();
+  ctx.fillStyle='#fff';ctx.font='bold '+Math.max(8,W*0.033)+'px Arial,sans-serif';ctx.textAlign='center';ctx.fillText('TPE',W/2,by+bh*0.73);
 }
 
 /* ── INIT ── */
@@ -385,32 +392,36 @@ if(!p){
 
   /* Gallery */
   const mainCanvas=document.getElementById('main-img');
+  const pModel=p.car.split(' ').slice(1).join(' ');
   mainCanvas.width=560;mainCanvas.height=420;
-  drawMatCanvas(mainCanvas,THUMB_BG[0][0],THUMB_BG[0][1],p.brand+' '+p.car.split(' ').slice(1,3).join(' '));
+  drawMatBrand(mainCanvas,p.brand,pModel);
   const thumbsContainer=document.getElementById('thumbs');
-  THUMB_BG.forEach((bg,i)=>{
+  const thumbAngles=[pModel,'Hàng ghế trước','Hàng ghế sau','Chi tiết gờ chắn'];
+  for(let i=0;i<4;i++){
     const wrap=document.createElement('div');wrap.className='gallery-thumb'+(i===0?' active':'');
-    const c=document.createElement('canvas');c.width=144;c.height=108;drawMatCanvas(c,bg[0],bg[1],null);wrap.appendChild(c);
+    const c=document.createElement('canvas');c.width=144;c.height=108;
+    drawMatBrand(c,p.brand,i===0?pModel:thumbAngles[i]);
+    wrap.appendChild(c);
     wrap.onclick=()=>{
       document.querySelectorAll('.gallery-thumb').forEach(t=>t.classList.remove('active'));
       wrap.classList.add('active');
       mainCanvas.width=560;mainCanvas.height=420;
-      drawMatCanvas(mainCanvas,bg[0],bg[1],p.brand+' · '+THUMB_LABELS[i]);
+      drawMatBrand(mainCanvas,p.brand,thumbAngles[i]);
     };
     thumbsContainer.appendChild(wrap);
-  });
+  }
 
   /* Related products (same category, different brand or same brand) */
   const related=Object.entries(ALL_PRODUCTS).filter(([s,r])=>s!==slug&&r.cat===p.cat).slice(0,4);
-  const MAT_COLORS=[['#D4D8E4','#B8BDD0'],['#D4DDE8','#B0BFCC'],['#DDD4E2','#C0B0CC'],['#D4E2D8','#B4CCC0']];
   const rGrid=document.getElementById('related-grid');
-  related.forEach(([s,r],i)=>{
+  related.forEach(([s,r])=>{
     const oldP=Math.round(r.price/0.8);
     const card=document.createElement('a');card.className='product-card';card.href='./san-pham.html?slug='+s;
     card.innerHTML=`<div class="product-img"><canvas width="260" height="190" aria-hidden="true"></canvas><div class="badge-wrap"><span class="badge-sale">-20%</span></div></div><div class="product-body"><div class="product-brand">${r.brand}</div><div class="product-name">${r.name}</div><div class="product-price-row"><div><div class="p-price-main">${fmtPrice(r.price)} ₫</div><div class="p-price-old">${fmtPrice(oldP)} ₫</div></div><button class="btn-add" onclick="event.preventDefault()">+</button></div></div>`;
     rGrid.appendChild(card);
     const cv=card.querySelector('canvas');cv.width=260;cv.height=190;
-    drawMatCanvas(cv,MAT_COLORS[i][0],MAT_COLORS[i][1],null);
+    const rModel=r.car.split(' ').slice(1).join(' ');
+    drawMatBrand(cv,r.brand,rModel);
   });
 }
 
