@@ -42,7 +42,8 @@
     <div class="product-detail-layout">
       <div class="gallery">
         <div class="gallery-main">
-          <canvas id="main-img" aria-label="Ảnh sản phẩm chính"></canvas>
+          <img id="main-img" alt="Ảnh sản phẩm chính" style="display:none;">
+          <canvas id="main-canvas" aria-label="Ảnh sản phẩm chính"></canvas>
           <button class="gallery-zoom" aria-label="Phóng to ảnh">🔍</button>
         </div>
         <div class="gallery-thumbs" id="thumbs"></div>
@@ -345,6 +346,58 @@ function drawMatBrand(canvas,brand,modelName){
   ctx.fillStyle='#fff';ctx.font='bold '+Math.max(8,W*0.033)+'px Arial,sans-serif';ctx.textAlign='center';ctx.fillText('TPE',W/2,by+bh*0.73);
 }
 
+const IMG_MAP={
+  'tham-lot-san-o-to-tpe-khuon-duc-toyota-vios':'hcar-003.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-toyota-veloz-cross':'hcar-006.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-toyota-fortuner':'hcar-007.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-hyundai-i10':'hcar-008.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-toyota-corolla-altis':'hcar-009.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-byd-sealion6':'hcar-010.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-ford-everest':'hcar-019.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-honda-brv':'hcar-015.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-toyota-innova-cross':'hcar-016.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-kia-soluto':'hcar-017.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-peugeot-2008':'hcar-018.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-mitsubishi-triton':'hcar-020.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-mazda-3-2014':'hcar-021.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-mitsubishi-pajero-sport':'hcar-022.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-honda-crv-2024':'hcar-023.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-hyundai-santa-fe-allnew':'hcar-024.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-hyundai-stargazer':'hcar-025.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-hyundai-custin':'hcar-026.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-hyundai-elantra':'hcar-027.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-hyundai-creta':'hcar-028.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-hyundai-tucson':'hcar-029.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-toyota-corolla-cross':'hcar-030.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-toyota-camry':'hcar-031.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-vinfast-vf5':'hcar-032.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-vinfast-mpv7':'hcar-033.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-vinfast-vf7':'hcar-034.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-vinfast-vf8':'hcar-035.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-vinfast-vf3':'hcar-036.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-vinfast-lux-sa':'hcar-037.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-byd-m6':'hcar-038.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-isuzu-mux':'hcar-039.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-toyota-innova':'hcar-040.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-hyundai-accent':'hcar-041.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-mazda-cx3':'hcar-042.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-mitsubishi-outlander':'hcar-043.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-mg-zs':'hcar-044.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-ford-ranger-2023':'hcar-045.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-mazda-3':'hcar-046.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-mitsubishi-xpander':'hcar-047.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-mitsubishi-destinator':'hcar-048.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-hyundai-accent-2024':'hcar-049.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-mitsubishi-attrage':'hcar-050.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-peugeot-3008':'hcar-051.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-peugeot-5008':'hcar-052.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-hyundai-santa-fe':'hcar-053.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-kia-sonet':'hcar-054.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-toyota-raize':'hcar-055.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-honda-crv':'hcar-056.webp',
+  'tham-lot-san-o-to-tpe-khuon-duc-mazda-cx8':'hcar-057.webp'
+};
+
 /* ── INIT ── */
 const slug=new URLSearchParams(location.search).get('slug');
 const p=ALL_PRODUCTS[slug];
@@ -391,24 +444,35 @@ if(!p){
   document.getElementById('reviews-list').innerHTML=REVIEWS.map(r=>`<div class="review-card"><div class="review-card-head"><div class="review-avatar">${r.a[0]}</div><div><div class="review-author">${r.a}</div><div class="review-date">${r.d}</div></div><div class="review-stars" style="margin-left:auto;">${r.s}</div></div><div class="review-text">${r.t}</div><div class="review-verify">✓ Đã mua hàng tại HCar</div></div>`).join('');
 
   /* Gallery */
-  const mainCanvas=document.getElementById('main-img');
+  const mainEl=document.getElementById('main-img');
+  const mainCv=document.getElementById('main-canvas');
   const pModel=p.car.split(' ').slice(1).join(' ');
-  mainCanvas.width=560;mainCanvas.height=420;
-  drawMatBrand(mainCanvas,p.brand,pModel);
+  const imgFile=IMG_MAP[slug];
   const thumbsContainer=document.getElementById('thumbs');
-  const thumbAngles=[pModel,'Hàng ghế trước','Hàng ghế sau','Chi tiết gờ chắn'];
-  for(let i=0;i<4;i++){
-    const wrap=document.createElement('div');wrap.className='gallery-thumb'+(i===0?' active':'');
-    const c=document.createElement('canvas');c.width=144;c.height=108;
-    drawMatBrand(c,p.brand,i===0?pModel:thumbAngles[i]);
-    wrap.appendChild(c);
-    wrap.onclick=()=>{
-      document.querySelectorAll('.gallery-thumb').forEach(t=>t.classList.remove('active'));
-      wrap.classList.add('active');
-      mainCanvas.width=560;mainCanvas.height=420;
-      drawMatBrand(mainCanvas,p.brand,thumbAngles[i]);
-    };
-    thumbsContainer.appendChild(wrap);
+  if(imgFile){
+    mainEl.src='../images/products/'+imgFile;mainEl.style.display='block';mainCv.style.display='none';
+    const base=imgFile.replace(/\.(webp|png)$/,'');
+    const ext=imgFile.endsWith('.png')?'.png':'.webp';
+    const thumbSrcs=[imgFile,base+' (1)'+ext,base+' (2)'+ext,base+' (1)'+ext];
+    for(let i=0;i<4;i++){
+      const wrap=document.createElement('div');wrap.className='gallery-thumb'+(i===0?' active':'');
+      const ti=document.createElement('img');ti.src='../images/products/'+thumbSrcs[i];ti.alt='Ảnh '+(i+1);
+      ti.onerror=function(){this.parentElement.style.display='none';};
+      wrap.appendChild(ti);
+      const src=thumbSrcs[i];
+      wrap.onclick=()=>{document.querySelectorAll('.gallery-thumb').forEach(t=>t.classList.remove('active'));wrap.classList.add('active');mainEl.src='../images/products/'+src;};
+      thumbsContainer.appendChild(wrap);
+    }
+  }else{
+    mainEl.style.display='none';mainCv.width=560;mainCv.height=420;drawMatBrand(mainCv,p.brand,pModel);
+    const thumbAngles=[pModel,'Hàng ghế trước','Hàng ghế sau','Chi tiết gờ chắn'];
+    for(let i=0;i<4;i++){
+      const wrap=document.createElement('div');wrap.className='gallery-thumb'+(i===0?' active':'');
+      const c=document.createElement('canvas');c.width=144;c.height=108;drawMatBrand(c,p.brand,i===0?pModel:thumbAngles[i]);
+      wrap.appendChild(c);
+      wrap.onclick=()=>{document.querySelectorAll('.gallery-thumb').forEach(t=>t.classList.remove('active'));wrap.classList.add('active');mainCv.width=560;mainCv.height=420;drawMatBrand(mainCv,p.brand,thumbAngles[i]);};
+      thumbsContainer.appendChild(wrap);
+    }
   }
 
   /* Related products (same category, different brand or same brand) */
@@ -417,11 +481,11 @@ if(!p){
   related.forEach(([s,r])=>{
     const oldP=Math.round(r.price/0.8);
     const card=document.createElement('a');card.className='product-card';card.href='./san-pham.html?slug='+s;
-    card.innerHTML=`<div class="product-img"><canvas width="260" height="190" aria-hidden="true"></canvas><div class="badge-wrap"><span class="badge-sale">-20%</span></div></div><div class="product-body"><div class="product-brand">${r.brand}</div><div class="product-name">${r.name}</div><div class="product-price-row"><div><div class="p-price-main">${fmtPrice(r.price)} ₫</div><div class="p-price-old">${fmtPrice(oldP)} ₫</div></div><button class="btn-add" onclick="event.preventDefault()">+</button></div></div>`;
+    const rImg=IMG_MAP[s];
+    const rImgEl=rImg?`<img src="../images/products/${rImg}" alt="${r.name}" loading="lazy">`:'<canvas width="260" height="190" aria-hidden="true"></canvas>';
+    card.innerHTML=`<div class="product-img">${rImgEl}<div class="badge-wrap"><span class="badge-sale">-20%</span></div></div><div class="product-body"><div class="product-brand">${r.brand}</div><div class="product-name">${r.name}</div><div class="product-price-row"><div><div class="p-price-main">${fmtPrice(r.price)} ₫</div><div class="p-price-old">${fmtPrice(oldP)} ₫</div></div><button class="btn-add" onclick="event.preventDefault()">+</button></div></div>`;
     rGrid.appendChild(card);
-    const cv=card.querySelector('canvas');cv.width=260;cv.height=190;
-    const rModel=r.car.split(' ').slice(1).join(' ');
-    drawMatBrand(cv,r.brand,rModel);
+    if(!rImg){const cv=card.querySelector('canvas');cv.width=260;cv.height=190;const rModel=r.car.split(' ').slice(1).join(' ');drawMatBrand(cv,r.brand,rModel);}
   });
 }
 

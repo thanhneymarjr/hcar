@@ -635,6 +635,7 @@ ul { list-style: none; }
   position: relative;
 }
 .gallery-main canvas { width: 100%; height: 100%; display: block; }
+.gallery-main img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .gallery-zoom {
   position: absolute; top: 12px; right: 12px;
   width: 32px; height: 32px; background: rgba(255,255,255,0.9);
@@ -654,6 +655,7 @@ ul { list-style: none; }
 }
 .gallery-thumb.active { border-color: var(--accent); }
 .gallery-thumb canvas { width: 100%; height: 100%; display: block; }
+.gallery-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 /* Product info */
 .product-info-panel { display: flex; flex-direction: column; gap: 20px; }
