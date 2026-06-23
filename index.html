@@ -161,14 +161,14 @@
     <div class="hero-visual" aria-hidden="true">
       <div class="hero-product-card-large">
         <div class="hero-product-img">
-          <canvas id="hero-product-canvas" width="340" height="240"></canvas>
+          <img src="./images/products/hcar-019.webp" alt="Thảm lót sàn TPV Ford Everest" style="width:100%;height:100%;object-fit:cover;display:block;">
         </div>
         <div class="hero-product-info">
           <div class="label">Bán chạy nhất</div>
-          <div class="hero-product-name">Thảm lót sàn TPV Toyota Veloz Cross</div>
+          <div class="hero-product-name">Thảm lót sàn TPV Ford Everest</div>
           <div class="hero-product-price">
-            <span class="price-main">2.100.000 ₫</span>
-            <span class="price-old">2.625.000 ₫</span>
+            <span class="price-main">2.050.000 ₫</span>
+            <span class="price-old">2.562.500 ₫</span>
             <span class="badge-sale">-20%</span>
           </div>
         </div>
@@ -360,7 +360,6 @@
 <script>
 /* hero canvas */ (function(){const c=document.getElementById('hero-canvas');if(!c)return;const ctx=c.getContext('2d');let W,H,lines=[];function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;}class Line{constructor(){this.reset();this.x=Math.random()*W;}reset(){this.fromRight=Math.random()>.5;this.x=this.fromRight?W+10:-10;this.y=Math.random()*H;this.speed=.5+Math.random()*1.4;this.dir=this.fromRight?-1:1;this.len=30+Math.random()*100;this.isRed=Math.random()<.18;this.alpha=this.isRed?.10+Math.random()*.15:.04+Math.random()*.06;this.width=.4+Math.random()*1.2;}update(){this.x+=this.speed*this.dir;if(this.dir===1&&this.x-this.len>W)this.reset();if(this.dir===-1&&this.x+this.len<0)this.reset();}draw(){const r=this.isRed?232:17,g=this.isRed?25:18,b=this.isRed?10:36;const grad=ctx.createLinearGradient(this.x,0,this.x+this.len*this.dir,0);grad.addColorStop(0,`rgba(${r},${g},${b},${this.alpha})`);grad.addColorStop(1,`rgba(${r},${g},${b},0)`);ctx.beginPath();ctx.moveTo(this.x,this.y);ctx.lineTo(this.x+this.len*this.dir,this.y);ctx.strokeStyle=grad;ctx.lineWidth=this.width;ctx.stroke();}}function init(){resize();lines=Array.from({length:70},()=>new Line());}function loop(){ctx.clearRect(0,0,W,H);lines.forEach(l=>{l.update();l.draw();});requestAnimationFrame(loop);}window.addEventListener('resize',resize);init();loop();})();
 
-/* hero product canvas */ (function(){const c=document.getElementById('hero-product-canvas');if(!c)return;const ctx=c.getContext('2d');const W=340,H=240;ctx.fillStyle='#EAEDF4';ctx.fillRect(0,0,W,H);ctx.strokeStyle='rgba(17,18,36,0.05)';ctx.lineWidth=1;for(let x=0;x<W;x+=18){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}for(let y=0;y<H;y+=18){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}const mat=new Path2D();mat.moveTo(60,58);mat.bezierCurveTo(60,38,280,38,280,58);mat.lineTo(290,178);mat.bezierCurveTo(290,198,50,198,50,178);mat.closePath();ctx.fillStyle='#D8DCE8';ctx.fill(mat);ctx.save();ctx.clip(mat);ctx.strokeStyle='rgba(255,255,255,0.6)';ctx.lineWidth=1;for(let y=50;y<210;y+=9){ctx.beginPath();ctx.moveTo(40,y);ctx.lineTo(300,y);ctx.stroke();}ctx.strokeStyle='rgba(232,25,10,0.15)';ctx.lineWidth=0.5;for(let x=40;x<310;x+=15)for(let y=45;y<210;y+=15){ctx.beginPath();ctx.moveTo(x+7.5,y);ctx.lineTo(x+15,y+7.5);ctx.lineTo(x+7.5,y+15);ctx.lineTo(x,y+7.5);ctx.closePath();ctx.stroke();}ctx.restore();ctx.strokeStyle='rgba(232,25,10,0.5)';ctx.lineWidth=2;ctx.stroke(mat);ctx.fillStyle='rgba(232,25,10,0.85)';ctx.font='bold 14px Arial Black,sans-serif';ctx.textAlign='center';ctx.fillText('HCAR',170,125);ctx.fillStyle='rgba(17,18,36,0.35)';ctx.font='10px Arial,sans-serif';ctx.fillText('VELOZ CROSS · TPV',170,141);})();
 
 /* product cards */
 const PRODUCTS=[
